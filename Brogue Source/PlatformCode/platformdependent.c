@@ -26,7 +26,12 @@
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-//#include <dirent.h>
+
+#ifdef _MSC_VER
+#include <windows.h>
+#else
+#include <dirent.h>
+#endif
 
 #include "platform.h"
 
@@ -355,9 +360,49 @@ fileEntry *commitFilelist(struct filelist *list, char **namebuffer) {
 	return list->files;
 }
 
+#ifdef _MSC_VER
 fileEntry *listFiles(short *fileCount, char **namebuffer) {
-	return 0;
-	/*
+	struct filelist *list = newFilelist();
+
+	WIN32_FIND_DATAA ep;
+	HANDLE dp = FindFirstFileA("*", &ep);
+	fileEntry *files;
+
+	if (dp != INVALID_HANDLE_VALUE)
+	{
+		boolean hasFiles = true;
+		do {
+			fileEntry *file = addfile(list, ep.cFileName);
+			if (file != NULL) {
+				// add the modification date to the file entry, the same way we do it for scores
+				SYSTEMTIME timeinfo;
+				FileTimeToSystemTime(&(ep.ftLastWriteTime), &timeinfo);
+				sprintf_s(file->date, sizeof(file->date), "%02d/%02d/%02d", timeinfo.wMonth, timeinfo.wDay, timeinfo.wYear % 100);
+			}
+
+			if ((0 == FindNextFileA(dp, &ep)) && (GetLastError() == ERROR_NO_MORE_FILES)) {
+				hasFiles = false;
+			}
+		} while (hasFiles);
+		FindClose(dp);
+	}
+	else {
+		*fileCount = 0;
+		return 0;
+	}
+
+	files = commitFilelist(list, namebuffer);
+	if (files != NULL) {
+		*fileCount = (short) list->nfiles;
+	} else {
+		*fileCount = 0;
+	}
+
+	freeFilelist(list);
+	return files;
+}
+#else
+fileEntry *listFiles(short *fileCount, char **namebuffer) {
 	struct filelist *list = newFilelist();
 
 	// windows: FindFirstFile/FindNextFile 
@@ -398,8 +443,8 @@ fileEntry *listFiles(short *fileCount, char **namebuffer) {
 	freeFilelist(list);
 
 	return files;
-	*/
 }
+#endif
 
 // end of file listing
 
