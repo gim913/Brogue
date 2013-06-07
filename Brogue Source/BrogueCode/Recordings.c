@@ -763,6 +763,16 @@ void executePlaybackInput(rogueEvent *recordingInput) {
 					messageWithColor("Omniscience disabled.", &teal, false);
 				}
 				break;
+			case DROP_KEY:
+				if (rogue.playbackDumpingActive) {
+					rogue.playbackDumpingActive = false;
+					flashTemporaryAlert("Dumping stopped", 1000);
+				} else {
+					rogue.playbackDumpingActive = true;
+					flashTemporaryAlert("Dumping started", 1000);
+				}
+				break;
+
 			case DESCEND_KEY:
 				pauseState = rogue.playbackPaused;
                 previousDeepestLevel = rogue.deepestLevel;

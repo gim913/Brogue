@@ -56,6 +56,11 @@ void plotChar(uchar inputChar,
 	currentConsole.plotChar(inputChar, xLoc, yLoc, foreRed, foreGreen, foreBlue, backRed, backGreen, backBlue);
 }
 
+void dumpConsole(const char* fileName)
+{
+	currentConsole.dump(fileName);
+}
+
 void pausingTimerStartsNow() {
 	
 }
@@ -361,6 +366,15 @@ fileEntry *commitFilelist(struct filelist *list, char **namebuffer) {
 }
 
 #ifdef _MSC_VER
+boolean createDirectory(const char* dirName) {
+	BOOL err = CreateDirectoryA(dirName, 0);
+	// if it already exists, we consider it a success
+	if (err != 0 || (GetLastError() == ERROR_ALREADY_EXISTS)) {
+		return true;
+	}
+	return false;
+}
+
 fileEntry *listFiles(short *fileCount, char **namebuffer) {
 	struct filelist *list = newFilelist();
 

@@ -76,6 +76,12 @@ static void gameLoop()
 	TCOD_console_delete(NULL);
 }
 
+static void tcod_dumpConsole(const char* fileName)
+{
+	TCOD_image_t pix = TCOD_image_from_console(0);
+	TCOD_image_save(pix, fileName);
+}
+
 static void tcod_plotChar(uchar inputChar,
 			  short xLoc, short yLoc,
 			  short foreRed, short foreGreen, short foreBlue,
@@ -640,7 +646,8 @@ struct brogueConsole tcodConsole = {
 	tcod_nextKeyOrMouseEvent,
 	tcod_plotChar,
 	tcod_remap,
-	modifier_held
+	modifier_held,
+	tcod_dumpConsole
 };
 
 #endif

@@ -2033,6 +2033,8 @@ typedef struct playerCharacter {
 	boolean playbackOOS;				// playback out of sync -- no unpausing allowed
 	boolean playbackOmniscience;		// whether to reveal all the map during playback
 	boolean playbackBetweenTurns;		// i.e. waiting for a top-level input -- iff, permit playback commands
+	boolean playbackDumpingActive;      // do the dumping?
+	short   playbackDumperCounter;		// for dumped filnames
 	unsigned long nextAnnotationTurn;	// the turn number during which to display the next annotation
 	char nextAnnotation[5000];			// the next annotation
 	unsigned long locationInAnnotationFile; // how far we've read in the annotations file
@@ -2386,6 +2388,7 @@ extern "C" {
 				  short xLoc, short yLoc,
 				  short backRed, short backGreen, short backBlue,
 				  short foreRed, short foreGreen, short foreBlue);
+	void dumpConsole(const char* fileName);
 	void pausingTimerStartsNow();
 	boolean pauseForMilliseconds(short milliseconds);
 	void nextKeyOrMouseEvent(rogueEvent *returnEvent, boolean textInput, boolean colorsDance);
@@ -2394,6 +2397,7 @@ extern "C" {
 	short getHighScoresList(rogueHighScoresEntry returnList[HIGH_SCORES_COUNT]);
 	boolean saveHighScore(rogueHighScoresEntry theEntry);
 	void initializeBrogueSaveLocation();
+	boolean createDirectory(const char* dirName);
 	fileEntry *listFiles(short *fileCount, char **dynamicMemoryBuffer);
 	void initializeLaunchArguments(enum NGCommands *command, char *path, unsigned long *seed);
 	

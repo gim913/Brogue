@@ -1497,6 +1497,29 @@ void plotCharToBuffer(uchar inputChar, short x, short y, color *foreColor, color
 	restoreRNG;
 }
 
+void handleDumping() {
+	char filePath[BROGUE_FILENAME_MAX];
+
+	// last one just 
+	if (rogue.playbackDumpingActive && rogue.playbackMode && !rogue.playbackPaused) {
+		if (rogue.gameHasEnded) {
+			rogue.playbackDumpingActive = false;
+		}
+		strncpy(filePath, currentFilePath, strlen(currentFilePath) - strlen(RECORDING_SUFFIX));
+		filePath[strlen(currentFilePath) - strlen(RECORDING_SUFFIX)] = 0;
+
+		if (createDirectory(filePath) && strlen(filePath) < BROGUE_FILENAME_MAX - 12)
+		{
+			strcat(filePath, "/i");
+			sprintf(filePath + strlen(filePath), "%07d.png", rogue.playbackDumperCounter);
+
+			printf(">> %s\n", filePath);
+			dumpConsole(filePath);
+			rogue.playbackDumperCounter++;
+		}
+	}
+}
+
 // Set to false and draws don't take effect, they simply queue up. Set to true and all of the
 // queued up draws take effect.
 void commitDraws() {
@@ -1516,6 +1539,8 @@ void commitDraws() {
 			}
 		}
 	}
+
+	handleDumping();
 }
 
 // Debug feature: display the level to the screen without regard to lighting, field of view, etc.

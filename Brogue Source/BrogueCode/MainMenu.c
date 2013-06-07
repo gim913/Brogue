@@ -757,6 +757,8 @@ void mainBrogueJunction() {
 				if (openFile(path)) {
 					randomNumbersGenerated = 0;
 					rogue.playbackMode = true;
+					rogue.playbackDumperCounter = 0;
+					rogue.playbackDumpingActive = false;
 					initializeRogue(0); // Seed argument is ignored because we're in playback.
 					if (!rogue.gameHasEnded) {
 						startLevel(rogue.depthLevel, 1);
