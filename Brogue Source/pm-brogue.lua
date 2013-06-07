@@ -10,6 +10,8 @@ project 'Brogue'
 		'ext/libtcod-1.5.1/include'
 	}
 
+	-- BUILD PLATFORM SPECIFIC SETTINGS
+
 	configuration {'x32', 'gmake'}
 		includedirs
 		{
@@ -23,6 +25,21 @@ project 'Brogue'
 		}
 		targetdir("bin/mingw-x86")
 
+	configuration {'x32', 'vs2010'}
+		includedirs
+		{
+			'ext/SDL-1.2.15-vc',
+		}
+		libdirs 
+		{ 
+			'ext/libtcod-1.5.1/lib/vs10',
+			'ext/SDL-1.2.15-vc/lib/x86',
+			-- 'ext/lua-5.2.1/lib/vc100/x86'
+		}
+		targetdir("bin/vc2010-x86")
+
+	-- BUILD PLATFORM GENERAL SETTINGS
+
 	configuration 'gmake'
 		linkoptions {
 			'-Wl,-stack,12000000,-subsystem,console',
@@ -32,6 +49,13 @@ project 'Brogue'
 			'../ext/SDL-1.2.15-mingw/lib/libSDL.dll.a'
 		}
 	
+	configuration { 'vs2010' }
+		links
+		{
+			'libtcod-VS',
+			'SDL'
+		}
+
 	configuration 'Release'
 		defines { 'NDEBUG', 'WIN32', '_WIN32', '_WINDOWS', 'BROGUE_TCOD' }
 		flags { 'OptimizeSpeed', 'NoMinimalRebuild', 'StaticRuntime' }
