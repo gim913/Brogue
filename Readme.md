@@ -4,6 +4,7 @@ Brogue
 v1.7.2
 
 About
+-----
 
 Brogue is a Roguelike game for Mac OS X, Windows and Linux by Brian Walker.
 
@@ -67,7 +68,11 @@ Scrolls are flammable and will be lost to brushfires.
  
 Do not be discouraged by the difficulty of the game. Very few characters will survive the Dungeons of Doom, but your odds will improve enormously once you're acquainted with the dungeon's treasures and inhabitants.
 
+Changelog
+---------
+
 New with v1.7.2:
+~~~~~~~~~~~~~~~~
  * The download includes a “seed catalog” file that details which items may be found on the first five depths of seeds 1-1000 as an optional benefit for players who want to try certain items.
  * Cursed items will no longer appear in vaults.
  * Rare monsters on deeper depths will appear with mutations, which can affect the monster’s stats or abilities.
@@ -102,6 +107,7 @@ New with v1.7.2:
 
 
 New with v.1.7.1:
+~~~~~~~~~~~~~~~~~
  * Certain terrain features (locked doors, stairs, altars, etc.) are noted in the sidebar, and like monsters and items, can be selected from the sidebar by mouse or with the tab key for pathfinding and targeting.
  * The dungeon generation code has been rewritten from scratch, and the dungeon is generated with several new basic room shapes.
  * The lighting state of the player’s location (lit/unlit) is displayed at the top of the side bar.
@@ -147,6 +153,7 @@ New with v.1.7.1:
  * Changed the open source license under which Brogue is distributed to AGPLv3.
 
 New with v1.7:
+~~~~~~~~~~~~~~
  * Removed experience from the game to reward exploration instead of combat, in part to avoid discouraging character builds that survive by avoiding or incapacitating monsters instead of killing them.
  * Potions of healing are now potions of life, and in addition to healing you, they permanently increase your maximum health. Their frequency is now tightly controlled, like scrolls of enchanting and potions of strength.
  * New item category: charms. Each can be activated periodically for a non-targeted effect. The duration over which the charms recharge as well as the intensity/duration of the effect increases with enchantment.
@@ -184,6 +191,7 @@ New with v1.7:
  * Jellies will not split if there are already 100 of their clones within one depth, so that the elusive jellymaster build will not cause crashes.
 
 New with v1.6.4:
+~~~~~~~~~~~~~~~~
  * Fixed a bug that caused allies’ damage to increase dramatically over time.
  * Fixed a bug that disabled the warning dialog box when you tried to walk into flame while levitating.
  * Fixed a bug with playback controls when watching a recording.
@@ -191,6 +199,7 @@ New with v1.6.4:
  * Magical glyphs connected to guardians will not appear in hallways.
 
 New with v1.6.3:
+~~~~~~~~~~~~~~~~
  * When examining items, unequipped weapons will tell you the percent by which equipping the weapon would affect your accuracy and damage, given what you know about the item. Similarly, examining unequipped armor will tell you what your expected armor value would be if you equipped it.
  * You get a free search every turn, as though you are always wearing a +1.5 ring of searching. In addition, secrets embedded in walls (secret doors, hidden levers) are 33% harder to detect.
  * Paralysis trap pressure plates are now physically separate from the locations that emit the paralytic gas, which means there are more hidden tiles that can be discovered to reveal the existence of a paralysis trap, and paralysis gas will generally take a turn or two to reach the player after stepping on the plate.
@@ -231,6 +240,7 @@ New with v1.6.3:
  * The version number is displayed on the title screen.
 
 New with v1.6.2:
+~~~~~~~~~~~~~~~~
  * New games can be started with a custom seed by control-clicking “New Game” on the title screen.
  * Several new monster types that appear exclusively as allies, and a new quest room in which they appear.
  * New weakness status effect that can be inflicted temporarily by centipedes.
@@ -256,12 +266,14 @@ New with v1.6.2:
  * Lots of bug fixes.
 
 New with v1.6.1:
+~~~~~~~~~~~~~~~~
  * New main menu screen, new file selection dialog box when loading games and saved recordings, and other miscellaneous interface improvements.
  * Bug fixes.
  * Monsters with the “magical fear” status effect will no longer attack when cornered (though monsters fleeing for other reasons may still do so).
  * The curve by which the “darkness” status effect wears off is more back-loaded.
 
 New with v1.6:
+~~~~~~~~~~~~~~
  * The “quest room” system has been expanded and enhanced to add further variety and interactivity to the dungeon. Some quest rooms can be generated in open areas, and the same system is used to create flavor terrain according to themes for particular areas.
  * The game is entirely playable by mouse control. A row of buttons has been added to the bottom of the screen to allow mouse access to all game commands. All commands remain accessible from the keyboard as before.
  * Buttons appear within item description windows to permit mouse-driven item actions (equip, unequip, apply, drop, throw, call).
@@ -293,6 +305,7 @@ New with v1.6:
  * Windows and Linux versions support key mapping.
 
 New with v1.5.2:
+~~~~~~~~~~~~~~~~
  * Message archive can be viewed by pressing shift-M or by clicking in the message block at the top of the screen.
  * Further refinements to mouse mode.
  * Tweaked experience point cut-offs at higher levels, with the goal of effectively capping growth at player level 12.
@@ -321,6 +334,7 @@ New with v1.5.2:
  * Waterbound monsters stranded on land are described as such.
 
 New with v1.5.1:
+~~~~~~~~~~~~~~~~
  * New mouse control features that combine examine mode with auto-travel, and that make the game fully playable without the use of vi-keys. Some related changes to key commands.
  * New quest rooms, some tweaks to existing quest rooms, and some new flavor terrain throughout the dungeon.
  * Added Scrolls of Shattering.
@@ -348,6 +362,7 @@ New with v1.5.1:
  * When saving a recording or saved game, the suggested filename will be incremented as necessary to default to an unused name.
 
 New with v1.5:
+~~~~~~~~~~~~~~
  * Dungeons now include interactive “quest rooms,” which include lock-and-key puzzles, collapsing/flooding terrain, hidden items, elaborate traps, challenges, boss monsters and more.
  * All new weapons: spears/pikes, which hit an adjacent enemy and the enemy behind it; axes, which hit all adjacent enemies; and maces/hammers, which hit twice as hard and require an extra turn to recover afterward.
  * Added item description screens, which include useful statistics about the item and are accessible via the inventory or by examining a discarded item on the ground.
@@ -380,19 +395,23 @@ New with v1.5:
  * New special effects for magic mapping and aggravate monsters scrolls.
 
 New with 1.4.3:
+~~~~~~~~~~~~~~~
  * Fixes a bug that prevented runic weapons from activating more frequently when the enchantment level of the weapon increased.
  * Fixes a formatting glitch in the description of Rings of Transference.
 
 New with 1.4.2:
+~~~~~~~~~~~~~~~
  * Fixes some potential crashes when examining certain items from the inventory.
  * Fixes a crash that would randomly occur when a bolt reflected off of something.
 
 New with 1.4.1:
+~~~~~~~~~~~~~~~
  * Items can be inspected by holding the shift key while selecting them from the inventory screen.
  * The Mac version will properly save recordings and saved games into the same directory as the application, which should fix the crash on startup experienced by some users.
  * The explore command will no longer cause the player to stop in the middle of natural patches of darkness.
 
 New with v1.4:
+~~~~~~~~~~~~~~
  * Games are now recorded into recording files that can be played back later. Recordings can be annotated if they are accompanied by a text file of the same name.
  * Games can be saved and restored later. (Because saved games use the same architecture as recordings, they can take a while to load.)
  * Allies are smarter about self-preservation; they will attempt to disengage from combat before dying and will try to avoid toxic gas.
@@ -413,6 +432,7 @@ New with v1.4:
  * Magic mapping color is a little brighter for greater visibility
 
 New with v1.3:
+~~~~~~~~~~~~~~
  * Three lines of message text are now visible instead of one.
  * Monsters can now be examined to reveal their statistics and special properties.
  * Strength is no longer gained upon level-up; instead, potions of gain strength are metered like food and scrolls of enchantment.
@@ -438,6 +458,7 @@ New with v1.3:
  * Memory color has been tweaked to make it more visually distinctive.
 
 New with v1.2:
+~~~~~~~~~~~~~~
  * Full feature-complete Windows and Linux ports thanks to the excellent Libtcod engine.
  * True player memory functionality so that the player is not aware of changes to the dungeon that she cannot see
  * Examine ability to look at monsters, items and terrain from a distance. Pressing return will travel to that point just like clicking. Pressing return again will resume travel if interrupted.
