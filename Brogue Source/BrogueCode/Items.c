@@ -448,14 +448,14 @@ boolean getItemSpawnLoc(unsigned short heatMap[DCOLS][DROWS], short *x, short *y
 
 // Generates and places items for the level. Must pass the location of the up-stairway on the level.
 void populateItems(short upstairsX, short upstairsY) {
-	if (!ITEMS_ENABLED) {
-		return;
-	}
 	item *theItem;
 	unsigned short itemSpawnHeatMap[DCOLS][DROWS];
 	short i, j, numberOfItems, numberOfGoldPiles, goldBonusProbability, x = 0, y = 0;
 	unsigned long totalHeat;
 	short theCategory, theKind;
+	if (!ITEMS_ENABLED) {
+		return;
+	}
 	
 #ifdef AUDIT_RNG
 	char RNGmessage[100];
@@ -1378,12 +1378,13 @@ itemTable *tableForItemCategory(enum itemCategory theCat) {
 }
 
 boolean isVowelish(char *theChar) {
-    short i;
+    char str[30];
+	short i;
     
 	while (*theChar == COLOR_ESCAPE) {
 		theChar += 4;
 	}
-    char str[30];
+    
     strncpy(str, theChar, 29);
     for (i = 0; i < 30; i++) {
         upperCase(&(str[1]));
@@ -3644,7 +3645,9 @@ boolean zap(short originLoc[2], short targetLoc[2], enum boltType bolt, short bo
 	color *boltColor;
     //color boltImpactColor;
 	dungeonFeature feat;
-	
+	lightSource *boltLights;
+	color *boltLightColors;
+
 #ifdef BROGUE_ASSERTS
 	assert(originLoc[0] != targetLoc[0] || originLoc[1] != targetLoc[1]);
 #else
@@ -3658,8 +3661,8 @@ boolean zap(short originLoc[2], short targetLoc[2], enum boltType bolt, short bo
 	
 	initialBoltLength = boltLength = 5 * boltLevel;
     
-	lightSource boltLights[initialBoltLength];
-	color boltLightColors[initialBoltLength];
+	boltLights = calloc(initialBoltLength, sizeof(lightSource));
+	boltLightColors = calloc(initialBoltLength, sizeof(color));
     
 	numCells = getLineCoordinates(listOfCoordinates, originLoc, targetLoc);
 	
@@ -3682,6 +3685,7 @@ boolean zap(short originLoc[2], short targetLoc[2], enum boltType bolt, short bo
 			|| (pmap[listOfCoordinates[0][0]][listOfCoordinates[0][1]].flags & (HAS_PLAYER | HAS_MONSTER)
 				&& !(monsterAtLoc(listOfCoordinates[0][0], listOfCoordinates[0][1])->bookkeepingFlags & MONST_SUBMERGED))) {
 				// shooting blink point-blank into an obstruction does nothing.
+				free(boltLights); free(boltLightColors);
 				return false;
 			}
 		pmap[originLoc[0]][originLoc[1]].flags &= ~(HAS_PLAYER | HAS_MONSTER);
@@ -3816,6 +3820,7 @@ boolean zap(short originLoc[2], short targetLoc[2], enum boltType bolt, short bo
 					if (shootingMonst == &player) {
 						gameOver("Killed by a reflected lightning bolt", true);
 					}
+					free(boltLights); free(boltLightColors);
 					return false;
 				}
 				if (boltInView || canSeeMonster(monst)) {
@@ -4084,6 +4089,7 @@ boolean zap(short originLoc[2], short targetLoc[2], enum boltType bolt, short bo
 						if (shootingMonst == &player) {
 							gameOver("Killed by a reflected firebolt", true);
 						}
+						free(boltLights); free(boltLightColors);
 						return false;
 					}
 					
@@ -4270,6 +4276,7 @@ boolean zap(short originLoc[2], short targetLoc[2], enum boltType bolt, short bo
 			}
 		}
 	}
+	free(boltLights); free(boltLightColors);
 	return autoID;
 }
 
@@ -4468,7 +4475,8 @@ boolean moveCursor(boolean *targetConfirmed,
 	rogueEvent theEvent;
 	
 	short *cursor = rogue.cursorLoc; // shorthand
-	
+	short oldRNG;
+
 	cursor[0] = targetLoc[0];
 	cursor[1] = targetLoc[1];
 	
@@ -4480,7 +4488,7 @@ boolean moveCursor(boolean *targetConfirmed,
 		cursorMovementCommand = false;
 		movementKeystroke = false;
 		
-		assureCosmeticRNG;
+		assureCosmeticRNG_nodecl;
 		
 		if (state) { // Also running a button loop.
 			
@@ -4688,7 +4696,8 @@ boolean chooseTarget(short returnLoc[2],
 	creature *monst;
 	boolean canceled, targetConfirmed, tabKey, cursorInTrajectory, focusedOnSomething = false;
 	rogueEvent event;
-		
+	short oldRNG;
+
 	if (rogue.playbackMode) {
 		// In playback, pull the next event (a mouseclick) and use that location as the target.
 		pullMouseClickDuringPlayback(returnLoc);
@@ -4696,7 +4705,7 @@ boolean chooseTarget(short returnLoc[2],
 		return true;
 	}
 	
-	assureCosmeticRNG;
+	assureCosmeticRNG_nodecl;
 	
 	originLoc[0] = player.xLoc;
 	originLoc[1] = player.yLoc;

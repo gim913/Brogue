@@ -703,15 +703,11 @@ void storeColorComponents(char components[3], const color *theColor) {
 }
 
 void bakeTerrainColors(color *foreColor, color *backColor, short x, short y) {
-    const short *vals;
-    if (rogue.trueColorMode) {
-        const short nf = 1000;
-        const short nb = 0;
-        const short neutralColors[8] = {nf, nf, nf, nf, nb, nb, nb, nb};
-        vals = neutralColors;
-    } else {
-        vals = &(terrainRandomValues[x][y][0]);
-    }
+    
+	const short nf = 1000;
+	const short nb = 0;
+	const short neutralColors[8] = {nf, nf, nf, nf, nb, nb, nb, nb};
+	const short *vals = (rogue.trueColorMode) ? neutralColors : &(terrainRandomValues[x][y][0]);
     
 	const short foreRand = foreColor->rand * vals[6] / 1000;
 	const short backRand = backColor->rand * vals[7] / 1000;
@@ -1411,15 +1407,15 @@ void colorMultiplierFromDungeonLight(short x, short y, color *editColor) {
 
 void plotCharWithColor(uchar inputChar, short xLoc, short yLoc, const color *cellForeColor, const color *cellBackColor) {
 	
-	short foreRed = cellForeColor->red,
-	foreGreen = cellForeColor->green,
-	foreBlue = cellForeColor->blue,
-	
-	backRed = cellBackColor->red,
-	backGreen = cellBackColor->green,
-	backBlue = cellBackColor->blue,
-	
-	foreRand, backRand;
+	short foreRed = cellForeColor->red;
+	short foreGreen = cellForeColor->green;
+	short foreBlue = cellForeColor->blue;
+
+	short backRed = cellBackColor->red;
+	short backGreen = cellBackColor->green;
+	short backBlue = cellBackColor->blue;
+
+	short foreRand, backRand, oldRNG;
 	
 #ifdef BROGUE_ASSERTS
 	assert(coordinatesAreInWindow(xLoc, yLoc));
@@ -1429,7 +1425,7 @@ void plotCharWithColor(uchar inputChar, short xLoc, short yLoc, const color *cel
 		return;
 	}
 	
-	assureCosmeticRNG;
+	assureCosmeticRNG_nodecl;
 	
 	foreRand = rand_range(0, cellForeColor->rand);
 	backRand = rand_range(0, cellBackColor->rand);
@@ -1478,6 +1474,8 @@ void plotCharWithColor(uchar inputChar, short xLoc, short yLoc, const color *cel
 }
 
 void plotCharToBuffer(uchar inputChar, short x, short y, color *foreColor, color *backColor, cellDisplayBuffer dbuf[COLS][ROWS]) {
+	short oldRNG;
+
 	if (!dbuf) {
 		plotCharWithColor(inputChar, x, y, foreColor, backColor);
 		return;
@@ -1487,7 +1485,7 @@ void plotCharToBuffer(uchar inputChar, short x, short y, color *foreColor, color
 	assert(coordinatesAreInWindow(x, y));
 #endif
 	
-	assureCosmeticRNG;
+	assureCosmeticRNG_nodecl;
 	dbuf[x][y].foreColorComponents[0] = foreColor->red + rand_range(0, foreColor->redRand) + rand_range(0, foreColor->rand);
 	dbuf[x][y].foreColorComponents[1] = foreColor->green + rand_range(0, foreColor->greenRand) + rand_range(0, foreColor->rand);
 	dbuf[x][y].foreColorComponents[2] = foreColor->blue + rand_range(0, foreColor->blueRand) + rand_range(0, foreColor->rand);
@@ -1680,12 +1678,13 @@ void flashForeground(short *x, short *y, color **flashColor, short *flashStrengt
 	short i, j, percent;
 	uchar *displayChar;
 	color *bColor, *fColor, newColor;
-	
+	short oldRNG;
+
 	if (count <= 0) {
 		return;
 	}
 	
-	assureCosmeticRNG;
+	assureCosmeticRNG_nodecl;
 	
 	displayChar = (uchar *) malloc(count * sizeof(uchar));
 	fColor = (color *) malloc(count * sizeof(color));
@@ -2400,12 +2399,13 @@ void flashMessage(char *message, short x, short y, int time, color *fColor, colo
 	color backColors[COLS], backColor, foreColor;
 	cellDisplayBuffer dbufs[COLS];
 	uchar dchar;
-	
+	short oldRNG;
+
 	if (rogue.playbackFastForward) {
 		return;
 	}
 	
-	assureCosmeticRNG;
+	assureCosmeticRNG_nodecl;
 	
 	messageLength = strLenWithoutEscapes(message);
 	fastForward = false;
@@ -2528,14 +2528,15 @@ void displayMonsterFlashes(boolean flashingEnabled) {
 	creature *monst;
 	short x[100], y[100], strength[100], count = 0;
 	color *flashColor[100];
-	
+	short oldRNG;
+
 	rogue.creaturesWillFlashThisTurn = false;
 	
 	if (rogue.autoPlayingLevel || rogue.blockCombatText) {
 		return;
 	}
 	
-	assureCosmeticRNG;
+	assureCosmeticRNG_nodecl;
 	
 	CYCLE_MONSTERS_AND_PLAYERS(monst) {
 		if (monst->bookkeepingFlags & MONST_WILL_FLASH) {
@@ -2943,12 +2944,13 @@ void refreshSideBar(short focusX, short focusY, boolean focusedEntityMustGoFirst
     short terrainLocationMap[ROWS][2];
 	boolean gotFocusedEntityOnScreen = (focusX >= 0 ? false : true);
 	char addedEntity[DCOLS][DROWS];
-	
+	short oldRNG;
+
 	if (rogue.gameHasEnded || rogue.playbackFastForward) {
 		return;
 	}
 	
-	assureCosmeticRNG;
+	assureCosmeticRNG_nodecl;
 	
 	if (focusX < 0) {
 		focusedEntityMustGoFirst = false; // just in case!
@@ -3726,7 +3728,8 @@ short printMonsterInfo(creature *monst, short y, boolean dim, boolean highlight)
 	color monstForeColor, monstBackColor, healthBarColor, tempColor;
 	short initialY, i, j, highlightStrength, displayedArmor;
 	boolean inPath;
-	
+	short oldRNG;
+
 	const char hallucinationStrings[10][COLS] = {
 		"     (Dancing)      ",
 		"     (Singing)      ",
@@ -3771,7 +3774,7 @@ short printMonsterInfo(creature *monst, short y, boolean dim, boolean highlight)
 	
 	initialY = y;
 	
-	assureCosmeticRNG;
+	assureCosmeticRNG_nodecl;
 	
 	if (y < ROWS - 1) {
 		printString("                    ", 0, y, &white, &black, 0); // Start with a blank line
@@ -3988,14 +3991,15 @@ short printItemInfo(item *theItem, short y, boolean dim, boolean highlight) {
 	color itemForeColor, itemBackColor;
 	short initialY, i, j, highlightStrength, lineCount;
 	boolean inPath;
-	
+	short oldRNG;
+
 	if (y >= ROWS - 1) {
 		return ROWS - 1;
 	}
 	
 	initialY = y;
 	
-	assureCosmeticRNG;
+	assureCosmeticRNG_nodecl;
 	
 	if (y < ROWS - 1) {
 		// Unhighlight if it's highlighted as part of the path.
@@ -4048,14 +4052,15 @@ short printTerrainInfo(short x, short y, short py, const char *description, bool
 	boolean inPath;
     char name[DCOLS*2];
     color textColor;
-	
+	short oldRNG;
+
 	if (py >= ROWS - 1) {
 		return ROWS - 1;
 	}
 	
 	initialY = py;
 	
-	assureCosmeticRNG;
+	assureCosmeticRNG_nodecl;
 	
 	if (py < ROWS - 1) {
 		// Unhighlight if it's highlighted as part of the path.

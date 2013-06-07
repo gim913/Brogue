@@ -235,12 +235,14 @@ short leastPositiveValueInGrid(short **grid) {
 void randomLocationInGrid(short **grid, short *x, short *y, short validValue) {
     const short locationCount = validLocationCount(grid, validValue);
     short i, j;
-    
+    short index;
+
     if (locationCount <= 0) {
         *x = *y = -1;
         return;
     }
-    short index = rand_range(0, locationCount - 1);
+    
+	index = rand_range(0, locationCount - 1);
 	for(i = 0; i < DCOLS && index >= 0; i++) {
 		for(j = 0; j < DROWS && index >= 0; j++) {
             if (grid[i][j] == validValue) {

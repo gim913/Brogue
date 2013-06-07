@@ -344,12 +344,16 @@ boolean updateFlare(flare *theFlare) {
 // Returns whether it overlaps with the field of view.
 boolean drawFlareFrame(flare *theFlare) {
     boolean inView;
+	lightSource tempLight;
+	color tempColor;
+
     if (!flareIsActive(theFlare)) {
         return false;
     }
     
-    lightSource tempLight = *(theFlare->light);
-    color tempColor = *(tempLight.lightColor);
+    tempLight = *(theFlare->light);
+    tempColor = *(tempLight.lightColor);
+
     tempLight.lightRadius.lowerBound = ((short) (((double) tempLight.lightRadius.lowerBound + FLOAT_FUDGE) * (theFlare->coeff / 100.0 + FLOAT_FUDGE)));
     tempLight.lightRadius.upperBound = ((short) (((double) tempLight.lightRadius.upperBound + FLOAT_FUDGE) * (theFlare->coeff / 100.0 + FLOAT_FUDGE)));
     applyColorScalar(&tempColor, (short) (theFlare->coeff + FLOAT_FUDGE));

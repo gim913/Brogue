@@ -199,6 +199,8 @@ struct mapsymbol {
 static struct mapsymbol *keymap = NULL;
 
 static void rewriteKey(TCOD_key_t *key, boolean text) {
+	struct mapsymbol *s;
+
 	if (key->vk == TCODK_CHAR && (SDL_GetModState() & KMOD_CAPS)) {
 		// cancel out caps lock
 		if (!key->shift) {
@@ -206,7 +208,7 @@ static void rewriteKey(TCOD_key_t *key, boolean text) {
 		}
 	}
 
-	struct mapsymbol *s = keymap;
+	s = keymap;
 	while (s != NULL) {
 		if (key->vk == s->in_vk) {
 			if (s->in_vk != TCODK_CHAR || (!text && s->in_c == key->c)) {

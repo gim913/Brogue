@@ -26,7 +26,7 @@
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <dirent.h>
+//#include <dirent.h>
 
 #include "platform.h"
 
@@ -356,6 +356,8 @@ fileEntry *commitFilelist(struct filelist *list, char **namebuffer) {
 }
 
 fileEntry *listFiles(short *fileCount, char **namebuffer) {
+	return 0;
+	/*
 	struct filelist *list = newFilelist();
 
 	// windows: FindFirstFile/FindNextFile 
@@ -396,6 +398,7 @@ fileEntry *listFiles(short *fileCount, char **namebuffer) {
 	freeFilelist(list);
 
 	return files;
+	*/
 }
 
 // end of file listing

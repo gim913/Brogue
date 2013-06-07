@@ -2562,6 +2562,7 @@ void digDungeon() {
 	short i, j;
     
     short **grid;
+    short **lakeMap;
 	
 	rogue.machineNumber = 0;
 	
@@ -2608,7 +2609,7 @@ void digDungeon() {
 	// DEBUG logLevel();
 	
 	// Now design the lakes and then fill them with various liquids (lava, water, chasm, brimstone).
-    short **lakeMap = allocGrid();
+    lakeMap = allocGrid();
 	designLakes(lakeMap);
 	fillLakes(lakeMap);
     freeGrid(lakeMap);

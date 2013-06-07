@@ -26,8 +26,8 @@
 #include "IncludeGlobals.h"
 
 void mutateMonster(creature *monst, short mutationIndex) {
-    monst->mutationIndex = mutationIndex;
     const mutation *theMut = &(mutationCatalog[mutationIndex]);
+	monst->mutationIndex = mutationIndex;
     monst->info.maxHP = monst->info.maxHP * theMut->healthFactor / 100;
     monst->info.movementSpeed = monst->info.movementSpeed * theMut->moveSpeedFactor / 100;
     monst->info.attackSpeed = monst->info.attackSpeed * theMut->attackSpeedFactor / 100;
@@ -801,11 +801,11 @@ boolean summonMinions(creature *summoner) {
 
 // Generates and places monsters for the level.
 void populateMonsters() {
+	short i, numberOfMonsters = min(20, 6 + 3 * max(0, rogue.depthLevel - AMULET_LEVEL)); // almost always 6.
+
 	if (!MONSTERS_ENABLED) {
 		return;
 	}
-	
-	short i, numberOfMonsters = min(20, 6 + 3 * max(0, rogue.depthLevel - AMULET_LEVEL)); // almost always 6.
 	
 	while (rand_percent(60)) {
 		numberOfMonsters++;

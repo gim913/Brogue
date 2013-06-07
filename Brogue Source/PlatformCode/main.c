@@ -71,6 +71,7 @@ static void badArgument(const char *arg) {
 
 int main(int argc, char *argv[])
 {
+	int i;
 #ifdef BROGUE_TCOD
 		currentConsole = tcodConsole;
 #else
@@ -81,7 +82,6 @@ int main(int argc, char *argv[])
 	rogue.nextGamePath[0] = '\0';
 	rogue.nextGameSeed = 0;
 
-	int i;
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "--scores") == 0) {
 			// just dump the scores and quit!

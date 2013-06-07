@@ -42,10 +42,10 @@ struct pdsMap {
 void pdsUpdate(pdsMap *map) {
 	short dir, dirs;
 	pdsLink *left = NULL, *right = NULL, *link = NULL;
-	
-	dirs = map->eightWays ? 8 : 4;
+	pdsLink *head;
 
-	pdsLink *head = map->front.right;
+	dirs = map->eightWays ? 8 : 4;
+	head = map->front.right;
 	map->front.right = NULL;
 
 	while (head != NULL) {
@@ -165,6 +165,7 @@ void pdsBatchInput(pdsMap *map, short **distanceMap, short **costMap, short maxD
 	for (i=0; i<DCOLS; i++) {
 		for (j=0; j<DROWS; j++) {
 			pdsLink *link = PDS_CELL(map, i, j);
+			int cost; // always initialized
 
 			if (distanceMap != NULL) {
 				link->distance = distanceMap[i][j];
@@ -174,8 +175,6 @@ void pdsBatchInput(pdsMap *map, short **distanceMap, short **costMap, short maxD
 					link->distance = maxDistance;
 				}
 			}
-
-			int cost;
 
 			if (i == 0 || j == 0 || i == DCOLS - 1 || j == DROWS - 1) {
 				cost = PDS_OBSTRUCTION;

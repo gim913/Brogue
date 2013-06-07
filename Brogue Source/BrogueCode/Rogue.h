@@ -1088,6 +1088,7 @@ boolean cellHasTerrainFlag(short x, short y, unsigned long flagMask);
 #define CYCLE_MONSTERS_AND_PLAYERS(x)		for ((x) = &player; (x) != NULL; (x) = ((x) == &player ? monsters->nextCreature : (x)->nextCreature))
 
 #define assureCosmeticRNG					short oldRNG = rogue.RNG; rogue.RNG = RNG_COSMETIC;
+#define assureCosmeticRNG_nodecl			oldRNG = rogue.RNG; rogue.RNG = RNG_COSMETIC;
 #define restoreRNG							rogue.RNG = oldRNG;
 
 #define MIN_COLOR_DIFF			500
