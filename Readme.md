@@ -1,6 +1,6 @@
 # Brogue
 
-v1.7.3
+v1.7.4
 
 About
 =====
@@ -23,11 +23,11 @@ Your goal is to travel to the 26th subterranean floor of the dungeon, retrieve t
 Tips
 ====
 
-Scrolls of Enchantment are unique to Brogue and are indispensable to the success of any character. Using one will permanently make a single item more powerful. Enchanting a weapon provides a boost to both its damage and accuracy and also lowers its strength requirement. Enchanting a suit of armor increases its effectiveness and also lowers its strength requirement. Enchanting a ring increases the power of its magical effect. Enchanting a staff increases both its effect and its maximum number of charges. Enchanting a wand gives it additional disposable charges equal to the minimum that such a wand can be found with.
+Scrolls of Enchantment are unique to Brogue and are indispensable to the success of any character. Using one will permanently make a single item more powerful. Enchanting a weapon provides a boost to both its damage and accuracy and also lowers its strength requirement. Enchanting a suit of armor increases its effectiveness and also lowers its strength requirement. Enchanting a ring increases the power of its magical effect. Enchanting a staff increases both its effect and its maximum number of charges. Enchanting a wand gives it additional disposable charges.
 
 If you encounter a monster that you haven't seen before, examine the monster with the mouse or by pressing tab. If you find an item you don't recognize, select it from your inventory to inspect it.
  
-Unlike wands, staves are permanent magical items. They have a maximum number of charges and will recharge from zero to maximum over a set period of time -- which means that increasing the maximum number of charges also increases the speed with which a single charge regenerates. Staffs of Blinking and Obstruction recharge half as quickly as other staves. If you use a Scroll of Identify to identify a staff, its current and maximum charges will be permanently revealed. This is particularly useful for the Staff of Blinking, since its maximum distance will be illustrated while aiming the staff. If you zap with a staff when it has no charges, nothing will happen and you will lose that turn, but the maximum number of charges will be permanently revealed.
+Unlike wands, staves are permanent magical items. They have a maximum number of charges and will recharge from empty to full over a set period of time -- which means that increasing the maximum number of charges also increases the speed with which a single charge regenerates. If you use a Scroll of Identify to identify a staff, its current and maximum charges will be permanently revealed. This is particularly useful for the Staff of Blinking, since its maximum distance will be illustrated while aiming the staff. If you zap with a staff when it has no charges, nothing will happen, but the maximum number of charges will be permanently revealed.
 
 Rings impart a magical effect on their wearer as long as they are worn. They impose no cost to nutrition or otherwise, but only two may be worn at the same time.
 
@@ -39,9 +39,9 @@ Armor and weapons that are found in the dungeon with positive or negative enchan
 
 Weapons and armor have strength requirements, which are specified as "<X>" after the item name. You can equip an item even if you don't exceed the strength requirement, but your combat prowess or defense will suffer proportionally. The strength requirement can be lowered by enchanting the weapon or armor with a scroll of enchantment. The only way to raise your own strength is by drinking a potion of strength.
 
-Some weapons have different attack patterns. Spears and war pikes hit an adjacent enemy and the one behind it. Axes and war axes hit all adjacent enemies. Maces and war hammers hit twice as hard but require an extra turn afterward to recover. Rapiers hit half as hard but twice as fast, and provide a free lunge attack (triple damage, never misses) when you directly approach an enemy.
+Some weapons have different attack patterns. Spears and war pikes hit an adjacent enemy and the one behind it. Axes and war axes hit all adjacent enemies. Maces and war hammers inflict very high damage but require an extra turn afterward to recover after a successful attack. Rapiers hit half as hard but twice as fast, and provide a free lunge attack (triple damage, never misses) when you directly approach an enemy. Whips automatically attack from up to five spaces away horizontally, vertically or diagonally. Flails automatically attack any adjacent enemy when you step between two spaces that are adjacent to the enemy.
  
-Weapons and armor may be protected from corrosion with a Scroll of Protect Weapon or Armor. Unless protected, striking an acid mound will weaken a weapon, and being struck by an acid mound or a projectile from an acid turret will weaken a suit of armor. Protection status is indicated with a curly brace ('}') following the inventory letter instead of a closing parenthesis, and is described in the item description screen.
+Weapons and armor may be protected from corrosion with a Scroll of Protect Weapon or Armor. Unless protected, striking an acid mound will weaken a weapon, and being struck by an acid mound or a projectile from an acid turret will weaken a suit of armor. Protection status is indicated with a curly brace ('}') following the inventory letter instead of a closing parenthesis, and is described in the item description screen. Positive runics will be permanently lost from an item if the item is corroded to an enchantment level of zero.
 
 The monsters of the dungeon do not reserve all of their aggression for you: from time to time, they are known to capture and torture other monsters. Once freed, these captives will follow you and fight by your side through thick and thin. Staves of Healing, Haste and Protection can be put to good use on your allies. Wands of Empowerment will make them more powerful, and enable them to learn a new ability from a fallen opponent.
 
@@ -49,7 +49,7 @@ Potions of incineration can spell the untimely end of an unprepared character. I
  
 When aiming a projectile or magical bolt, it is often possible to hit targets that at first seem out of reach. Try adjusting the targeting reticule to a position behind them.
 
-Physically attacking a monster that has not noticed the player -- that is asleep or wandering, or that is paralyzed -- makes for a very powerful attack: the attack will never miss, it will deal triple damage, and the monster will take a turn to recover before it can counterattack. Monsters have a 25% chance per turn to notice the player if they are closer than your "stealth range," which is displayed in the side bar, and can be displayed on the map by pressing ']'. One effective tactic is to lurk just behind a door that you know a monster is approaching and ambush it when it opens the door. Your stealth range is affected by your armor, invisibility, the local light level, rings of stealth and whether you spent the previous turn resting.
+Physically attacking a monster that has not noticed the player -- that is asleep or wandering, or that is paralyzed -- makes for a very powerful attack: the attack will never miss, it will deal triple damage, and the monster will take a turn to recover before it can counterattack. Monsters have a 25% chance per turn to notice the player if they are closer than your "stealth range," which is displayed in the side bar; your stealth range can also be displayed on the map by pressing ']'. It can be effective to lurk just behind a door that you know a monster is approaching and ambush it when it opens the door. Your stealth range is affected by your armor, invisibility, the local light level, rings of stealth and whether you spent the previous turn resting.
 
 Mud-filled bogs will gradually accumulate a layer of swamp gas. Beware: the gas is highly explosive when exposed to an open flame, and an immunity to fire will not protect you from its percussive blast. Any creature, no matter how powerful, will lose at least half of its maximum health from a single explosion.
  
@@ -61,12 +61,91 @@ Deeper levels contain pit traps, fire traps, gas traps, net traps and flood trap
 
 Levels can generally be explored fully without venturing into or over lava, chasms, traps or deep water. If no path presents itself, search along likely walls with the search command.
  
-Scrolls are flammable and will be lost to brushfires.
+Scrolls are flammable and will be lost to brushfires if lying on the ground.
  
-Do not be discouraged by the difficulty of the game. Very few characters will survive the Dungeons of Doom, but your odds will improve enormously once you're acquainted with the dungeon's treasures and inhabitants. For an easier challenge, look at the "Brogue seed catalog.txt" file that comes with the game to choose your preferred set of items.
+Do not be discouraged by the difficulty of the game. Very few characters will survive the Dungeons of Doom, but your odds will improve enormously once you're acquainted with the dungeon's treasures and inhabitants. For an easier challenge, examine the "Brogue seed catalog.txt" file that comes with the game to choose your preferred set of items.
 
 Changelog
 =========
+
+New with v1.7.4:
+----------------
+
+New content:
+ * Added the Warden of Yendor, a slow but invulnerable creature that will permanently stalk you after you take the amulet.
+ * Added whips as a new weapon type with a unique attack pattern (now shared by salamanders).
+ * Added flails as a new weapon type with a unique attack pattern.
+ * Added rings of reaping, which recharge your staffs and charms in proportion to the melee damage you inflict.
+ * Added commutation altars, which swap the enchantment levels between two items, as a possible vault in depths 13-26.
+ * Added resurrection altars, which raise your most recently deceased ally from the dead, as a possible vault in depths 13-26.
+ * Added glass dewars, which release large quantities of gas when broken.
+ * Added scrolls of discord and scrolls of sanctuary.
+ * Added a new legendary ally: the mangrove dryad.
+ * Added two new quest rooms and more dungeon flavor.
+ * Added an alarm trap, which aggravates monsters from up to half of the radius of the level.
+
+Gameplay changes:
+ * Maces and war hammers take two turns only when your attack hits; misses take only one turn.
+ * Daggers do 5x damage upon a sneak attack instead of 3x.
+ * Weapons generally have been rebalanced: daggers require 12 strength instead of 10; maces and war hammers deal less damage per hit; axes, war axes and war pikes deal slightly more damage; and weapon damage overall has slightly less variance.
+ * Stealth radius starts at 7 instead of 6. Stealth radius is fixed at 1 when you are invisible. When visible and not resting, stealth has a lower bound of 2.
+ * Rings of transference provide 5% recovery per enchantment level instead of 10%, but now work on all direct damage (including thrown weapons, lightning and firebolts) instead of only melee damage.
+ * Turrets and totems other than mirror totems will fire on you only if they are within your stealth radius.
+ * An item vault will not spawn more than one of the same item type.
+ * Weapons of slaying and armor of immunity are effective against a class of monsters instead of just a single monster type.
+ * Monster mutations are more common in the deeper epilogue depths.
+ * Poison deals escalating damage with each additional dose.
+ * The food clock is slightly more generous at deeper levels.
+ * Weapons, armor, staffs, rings and charms can be found, rarely, with higher natural enchantment levels.
+ * Goblins, ogres and dar will try to avoid attacking in corridors when they're in groups.
+ * Scrolls of aggravate monster will cause monsters to hunt you from across the level.
+ * Empowerment fully heals creatures and cures status ailments.
+ * Traps are present much earlier in the dungeon, but are pre-revealed on these earlier depths.
+ * Bridges collapse systematically when any portion is burned.
+ * Allies do not flee from mirror totems.
+ * Fleeing enemies will sometimes try to hide in secret rooms.
+ * Monkeys are less common.
+ * Decreased the recharge delay of the charm of recharging at higher enchantment levels.
+ * The effect of wands of slowing lasts for 50 turns.
+ * Obstruction crystals will darken one turn before vanishing, and obstruction crystals in which creatures or the player are embedded will vanish one turn after being exposed to air.
+ * Invisible creatures standing in gas can be targeted by other creatures' projectile attacks.
+ * Corrosion by acid will remove good runics from weapons and armor when their enchantment value reaches zero.
+ * Vampiric monsters won't regain health from you if you have runic armor of immunity that is effective against that monster type.
+ * Captive monsters can't submerge.
+ * Non-aquatic grappling monsters can hit levitating monsters.
+ * Items that fall through a hidden trap door while in view will reveal the trap door.
+ * Wands of empowerment auto-identify when used.
+ * Allies won't defect if you hurl another monster against them with a weapon of force, although they will still take damage from the impact.
+
+UI changes:
+ * Added percentage displays to the item discoveries screen, which reflect how likely an unidentified item of a given category is to be a particular type. (No percentage is listed for potions of strength or life or scrolls of enchanting because those items' prevalence is dynamically adjusted so that roughly the same number are found at roughly the same pace between games.)
+ * When color effects are disabled, there is a visual indicator of light level, and allies are displayed in white for greater visual distinctiveness.
+ * Exploration mode indicates where it will take you before activating, and is interrupted when you see a key or locked door.
+ * Pathing will not indirectly reveal changes of terrain in areas that are out of view.
+ * Added a relabel command to change the reference letter of items in your pack.
+ * Mousing over an item you remember seeing elsewhere on the level will reveal item kind and quantity as well as item category.
+ * Objects that can be seen directly are listed in the sidebar above objects that can be seen via telepathy/clairvoyance/omniscience.
+ * Added failsafes to guard against accidentally blinking into lava.
+ * Monster mutations are no longer displayed while you're hallucinating.
+ * Nets, webs and nausea won't interrupt auto-explore; nor will the reappearance of a monster that was in view when exploration/travel began.
+ * Targeting indicators for identified wands and staffs are colored to match the bolt of the wand/staff to reduce instances of accidentally throwing staffs.
+ * Explosive creatures have an intense orange glow.
+ * Added easy mode activation to the action menu.
+ * Item descriptions reveal what depth the item was found on, and item descriptions for staffs reveal how many turns it typically takes to recover a charge.
+
+Bug fixes:
+ * Fixed a crash when a vampire summoned bats.
+ * Fixed a crash when exploring goblin warrens.
+ * Fixed a bug that could cause certain door-opening pressure plates to be walled off from the level.
+ * Fixed a bug that double-counted weakness status penalties against the player.
+ * Fixed a bug that allowed monsters to escape from webs and nets faster than the player.
+ * Fixed several sources of out-of-sync errors during replays and saved game reloading.
+ * Spectral clones of explosive or infected enemies created by armor of multiplicity do not explode or infect upon death or expiration.
+ * Split clones of mutated jellies will properly inherit any mutation effects of their progenitor.
+ * Fixed several bugs with replay UI.
+ * Fixed a bug that sometimes caused polymorph to do nothing (when the randomly chosen polymorph type was already the type of the monster).
+ * Fixed a bug that permitted allies to cast bolts at reflective opponents.
+ * Fixed a bug that caused polymorphed monkeys/imps with a stolen item to continue fleeing.
 
 New with v1.7.3:
 ----------------
