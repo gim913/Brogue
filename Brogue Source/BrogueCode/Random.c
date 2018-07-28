@@ -36,8 +36,6 @@ short randClump(randomRange theRange) {
 // Get a random int between lowerBound and upperBound, inclusive, with probability distribution
 // affected by clumpFactor.
 short randClumpedRange(short lowerBound, short upperBound, short clumpFactor) {
-	short i, total = 0, numSides;
-
 	if (upperBound <= lowerBound) {
 		return lowerBound;
 	}
@@ -45,7 +43,7 @@ short randClumpedRange(short lowerBound, short upperBound, short clumpFactor) {
 		return rand_range(lowerBound, upperBound);
 	}
 	
-	numSides = (upperBound - lowerBound) / clumpFactor;
+	short i, total = 0, numSides = (upperBound - lowerBound) / clumpFactor;
 	
 	for(i=0; i < (upperBound - lowerBound) % clumpFactor; i++) {
 		total += rand_range(0, numSides + 1);

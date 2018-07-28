@@ -33,7 +33,7 @@ extern short **playerPathingMap;
 
 extern const short nbDirs[8][2];
 extern const short cDirs[8][2];
-extern levelData levels[DEEPEST_LEVEL+1];
+extern levelData *levels;
 extern creature player;
 extern playerCharacter rogue;
 extern creature *monsters;
@@ -59,7 +59,7 @@ extern char displayDetail[DCOLS][DROWS];
 extern FILE *RNGLogFile;
 #endif
 
-extern unsigned char inputRecordBuffer[INPUT_RECORD_BUFFER + 10];
+extern unsigned char inputRecordBuffer[INPUT_RECORD_BUFFER + 100];
 extern unsigned short locationInRecordingBuffer;
 
 extern unsigned long positionInPlaybackFile;
@@ -192,6 +192,8 @@ extern creatureType monsterCatalog[NUMBER_MONSTER_KINDS];
 extern monsterWords monsterText[NUMBER_MONSTER_KINDS];
 extern hordeType hordeCatalog[NUMBER_HORDES];
 extern const mutation mutationCatalog[NUMBER_MUTATORS];
+
+extern const feat featTable[FEAT_COUNT];
 
 extern color *boltColors[NUMBER_BOLT_KINDS];
 

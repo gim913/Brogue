@@ -286,7 +286,7 @@ void titleMenu() {
 	
 	// Initialize the title menu buttons.
 	encodeMessageColor(whiteColorEscape, 0, &white);
-	encodeMessageColor(goldColorEscape, 0, &itemMessageColor);
+    encodeMessageColor(goldColorEscape, 0, KEYBOARD_LABELS ? &itemMessageColor : &white);
 	sprintf(newGameText, "      %sN%sew Game      ", goldColorEscape, whiteColorEscape);
 	sprintf(customNewGameText, " %sN%sew Game (custom) ", goldColorEscape, whiteColorEscape);
 	b = 0;
@@ -449,7 +449,11 @@ boolean dialogChooseFile(char *path, const char *suffix, const char *prompt) {
 			initializeButton(&(buttons[i]));
 			buttons[i].flags &= ~(B_WIDE_CLICK_AREA | B_GRADIENT);
 			buttons[i].buttonColor = *dialogColor;
-			sprintf(buttons[i].text, "%c) ", 'a' + i);
+            if (KEYBOARD_LABELS) {
+                sprintf(buttons[i].text, "%c) ", 'a' + i);
+            } else {
+                buttons[i].text[0] = '\0';
+            }
 			strncat(buttons[i].text, files[currentPageStart+i].path, MAX_FILENAME_DISPLAY_LENGTH);
 			
 			// Clip off the file suffix from the button text.
@@ -573,7 +577,7 @@ void scum(unsigned long startingSeed, short numberOfSeedsToScan, short scanThrou
     char buf[200];
     FILE *logFile;
     
-    logFile = fopen("Brogue seed scumming log file.txt", "w");
+    logFile = fopen("Brogue seed catalog.txt", "w");
     rogue.nextGame = NG_NOTHING;
     
     getAvailableFilePath(path, LAST_GAME_NAME, GAME_SUFFIX);

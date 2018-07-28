@@ -1,7 +1,7 @@
 Brogue
 ======
 
-v1.7.2
+v1.7.3
 
 About
 -----
@@ -12,16 +12,14 @@ The latest version can be downloaded at http://sites.google.com/site/broguegame/
 
 I can be reached at penderprime@gmail.com -- feel free to send me any thoughts or bug reports.
 
-Many thanks to Joshua Day for maintaining and compiling the Linux and Windows builds, and to Joshua Day, Frank Brown and Kevin Walker for brainstorming, coding assistance and testing.
-
+Many thanks to Joshua Day for maintaining and compiling the Linux and Windows builds, to Seth Howard for developing and maintaining the iPad build and optimizing the Mac OS X code, and to Joshua Day, Frank Brown and Kevin Walker for brainstorming, coding assistance and testing.
 
 How to Play
 -----------
 
-You are the @ symbol. Move around the dungeon with the mouse, the vi-keys (hjklyubn) or keypad keys. The arrow keys will also work, but they do not allow diagonal movement. Other commands are as listed in the help screen, which you can access by typing a question mark.
+Move around the dungeon with the mouse, the vi-keys (hjklyubn) or keypad keys. The arrow keys will also work, but they do not allow diagonal movement. Other commands are as listed in the help screen, which you can access by typing a question mark or clicking on the "Menu" button at the bottom of the screen.
 
-Your goal is to travel to the 26th subterranean floor of the dungeon, retrieve the Amulet of Yendor and return with it to the surface. For the truly skillful who desire further challenge, depths below 26 contain three lumenstones each -- items which confer no benefit except an increased score upon victory.
-
+Your goal is to travel to the 26th subterranean floor of the dungeon, retrieve the Amulet of Yendor and return with it to the surface. For the truly skillful who desire further challenge, depths below 26 contain three lumenstones each, items which confer an increased score upon victory.
 
 Tips
 ----
@@ -40,19 +38,19 @@ When you first equip a weapon or suit of armor, you will not know if it already 
 
 Armor and weapons that are found in the dungeon with positive or negative enchantments might also have rare and powerful runic abilities. These will not be apparent at first. Some of them will be revealed when they activate. The rest will be flagged as "unknown runic" when you've used them for long enough. In any case, a Scroll of Identify will instantly reveal the item's runic enhancement, if it has one.
 
-Weapons and armor have strength requirements, which are specified as "<X>" after the item name. You can equip an item even if you don't exceed the strength requirement, but your combat prowess or defense will suffer proportionally. The only way to raise your strength is by drinking potions of strength.
+Weapons and armor have strength requirements, which are specified as "<X>" after the item name. You can equip an item even if you don't exceed the strength requirement, but your combat prowess or defense will suffer proportionally. The strength requirement can be lowered by enchanting the weapon or armor with a scroll of enchantment. The only way to raise your own strength is by drinking a potion of strength.
 
-Some weapons have different attack patterns. Spears and war pikes hit an adjacent enemy and the one behind it. Axes and war axes hit all adjacent enemies. Maces and war hammers hit twice as hard but require an extra turn afterward to recover. Rapiers hit half as hard but twice as fast, and provide a free lunge attack when you directly approach an enemy.
+Some weapons have different attack patterns. Spears and war pikes hit an adjacent enemy and the one behind it. Axes and war axes hit all adjacent enemies. Maces and war hammers hit twice as hard but require an extra turn afterward to recover. Rapiers hit half as hard but twice as fast, and provide a free lunge attack (triple damage, never misses) when you directly approach an enemy.
  
 Weapons and armor may be protected from corrosion with a Scroll of Protect Weapon or Armor. Unless protected, striking an acid mound will weaken a weapon, and being struck by an acid mound or a projectile from an acid turret will weaken a suit of armor. Protection status is indicated with a curly brace ('}') following the inventory letter instead of a closing parenthesis, and is described in the item description screen.
 
-The monsters of the dungeon do not reserve all of their aggression for you: from time to time, they are known to capture and torture other monsters. Once freed, these captives will follow you and fight by your side through thick and thin. Staves of Healing, Haste and Protection can be put to good use on your allies.
+The monsters of the dungeon do not reserve all of their aggression for you: from time to time, they are known to capture and torture other monsters. Once freed, these captives will follow you and fight by your side through thick and thin. Staves of Healing, Haste and Protection can be put to good use on your allies. Wands of Empowerment will make them more powerful, and enable them to learn a new ability from a fallen opponent.
 
 Potions of incineration can spell the untimely end of an unprepared character. It's best to try unidentified potions near a body of water to extinguish any resulting flames -- but be careful, because if the burning liquid touches deep water, the cavern may quickly fill with scalding steam.
  
 When aiming a projectile or magical bolt, it is often possible to hit targets that at first seem out of reach. Try adjusting the targeting reticule to a position behind them.
 
-Physically attacking a monster that has not noticed the player -- that is asleep or wandering, or that is paralyzed -- makes for a very powerful attack: the attack will never miss, it will deal three times as much damage, and the monster will take a turn to recover before it can counterattack. Monsters are less likely to notice players at a distance and when the player is resting, outside of the range of any nearby light sources or wearing a ring of stealth. One effective tactic is to lurk just behind a door that you know a monster is approaching and ambush it when it opens the door.
+Physically attacking a monster that has not noticed the player -- that is asleep or wandering, or that is paralyzed -- makes for a very powerful attack: the attack will never miss, it will deal triple damage, and the monster will take a turn to recover before it can counterattack. Monsters have a 25% chance per turn to notice the player if they are closer than your "stealth range," which is displayed in the side bar, and can be displayed on the map by pressing ']'. One effective tactic is to lurk just behind a door that you know a monster is approaching and ambush it when it opens the door. Your stealth range is affected by your armor, invisibility, the local light level, rings of stealth and whether you spent the previous turn resting.
 
 Mud-filled bogs will gradually accumulate a layer of swamp gas. Beware: the gas is highly explosive when exposed to an open flame, and an immunity to fire will not protect you from its percussive blast. Any creature, no matter how powerful, will lose at least half of its maximum health from a single explosion.
  
@@ -60,16 +58,71 @@ It is generally optimal to eat a ration of food as soon as your character become
  
 The only purpose of gold is to establish a character's score upon death or victory.
 
-Deeper levels contain pit traps, fire traps, gas traps and flood traps. If you know where they are, you can trigger them from a distance by tossing an item onto their pressure plate.
+Deeper levels contain pit traps, fire traps, gas traps, net traps and flood traps. If you know where they are, you can trigger them from a distance by tossing an item onto their pressure plates.
 
 Levels can generally be explored fully without venturing into or over lava, chasms, traps or deep water. If no path presents itself, search along likely walls with the search command.
  
 Scrolls are flammable and will be lost to brushfires.
  
-Do not be discouraged by the difficulty of the game. Very few characters will survive the Dungeons of Doom, but your odds will improve enormously once you're acquainted with the dungeon's treasures and inhabitants.
+Do not be discouraged by the difficulty of the game. Very few characters will survive the Dungeons of Doom, but your odds will improve enormously once you're acquainted with the dungeon's treasures and inhabitants. For an easier challenge, look at the "Brogue seed catalog.txt" file that comes with the game to choose your preferred set of items.
 
 Changelog
 ---------
+
+New with v1.7.3:
+~~~~~~~~~~~~~~~~
+ * Redesigned the stealth system to promote transparency and tactical interest. Monsters now have a flat 25% chance per turn to notice you if they are within your "stealth range," which is a product of light level, invisibility, whether you spent the previous turn resting, rings of stealth and the natural weight of your armor. Your stealth range is listed on the side bar and may optionally be displayed on the map. Hunting monsters will lose track of you if they are farther away than triple your stealth range (or more than two spaces away if you're invisible).
+ * Redesigned ally progression to make allies feel less compulsory and capricious. A charge from the new Wand of Empowerment will permanently increase the combat abilities of a monster and allow it to absorb one ability from a fallen enemy. Allies that are empowered and subsequently negated will be able to re-learn their lost abilities. Allies no longer progress in strength or abilities from "exploration experience."
+ * Score upon victory is determined exclusively by gold, the amulet and lumenstones; other items are not counted. To compensate, the amulet is worth 35,000 gold instead of 10,000.
+ * Implemented conduct challenges, which are listed on the death and victory screens as appropriate (but otherwise do not affect the game or score).
+ * Scrolls of recharging no longer affect wands.
+ * Food generation is slightly more generous, and somewhat less predictable.
+ * Sneak-attacking with a runic will either double the proc chance or increase it halfway to 100%, whichever is less.
+ * Added a new trap: the net trap.
+ * Added a new charm type: the guardian charm.
+ * Added a new quest room: the goblin warren.
+ * When equipping armor, the armor value will rise from zero over several turns to discourage frequent armor swapping.
+ * Wands of domination and plenty are less common.
+ * Added axe and spear attack patterns to certain monsters. Spectral weapons from multiplicity inherit the attack pattern of their parent weapon; nagas and dragons attack all adjacent opponents like axes'; and goblin attacks penetrate like spears'.
+ * Negation charms have limited range, which increases with the enchantment level of the charm.
+ * Pressure plates are no longer activated by items floating onto them or by aquatic monsters in water.
+ * Grappling monsters have more health.
+ * Nerfed the jellymancer build by preventing split jellies from inheriting their progenitor's learned abilities or attributes.
+ * Reflected bolts won't turn allies against you.
+ * Submerging monsters cannot have the "explosive" mutation.
+ * Damage from poison, caustic gas, steam, burning, mutuality and reprisal now ignore magical protection status.
+ * Poison damage pops up temporary alerts similar to health alerts.
+ * Added a "view dungeon seed" item to the menu button at the bottom of the screen.
+ * Summoners can continue to summon while they are fleeing.
+ * Polymorph erases mutations.
+ * Drinking a potion of descent will cause you to fall unless you are levitating, irrespective of the terrain you are standing on.
+ * Pit bloats are a lighter shade of blue.
+ * Bloodwort pods no longer appear in the side bar; only the stalk is listed.
+ * Accumulated gold is described on the game over screen.
+ * Poisonous attacks won't affect inanimate creatures.
+ * Guarding and worshiping monsters will mill about more randomly.
+ * Spectral blades aren't listed in the side bar unless highlighted by the cursor.
+ * Centaurs and spiders will launch their projectile attacks whether or not the enemy is reflective.
+ * Centaurs and arrow turrets can hit turrets, won't attack creatures embedded in obstruction crystals and won't lose their ranged attack when negated.
+ * Shattering will free dormant creatures trapped within.
+ * Guardians hit harder, and monsters avoid them better.
+ * Potions of purple gas and pink jellies are referred to as caustic rather than poisonous.
+ * Monsters that learn to fly will lose the ability to submerge and will no longer be constrained to liquids.
+ * Weapons known to have runes of acid mound slaying won't warn against attacking an acid mound.
+ * Creatures launched by weapons of force will damage (in addition to being damaged by) the enemy that they slam into.
+ * Fleeing monsters won't become aware of your location if you're invisible unless you're next to them.
+ * Thrown items won't hit submerged creatures.
+ * Runic armor with an unknown enchantment level won't give away its enchantment levels from its description.
+ * Gouts of flame appear when monsters are consumed by lava, similar to items.
+ * Fixed message color issues when one ally kills another discordant ally.
+ * Tweaked negation order of operations so negating an infected golem won't release spores.
+ * "(Off balance)" status indicators appear only when a monster is hunting.
+ * Fixed a bug that caused certain creatures to flee at the start of a level.
+ * Fixed a bug that caused the vampiric trait to increase a monster's max health over time.
+ * Fixed some edge case bugs that resulted in malformed machine rooms and bridges.
+ * Fixed bugs related to naming items.
+ * Fixed bug that caused discordant monkey or imp allies to flee forever if they steal an item while discordant.
+ * Fixed grammatical flaws related to choosing between "a" and "an"
 
 New with v1.7.2:
 ~~~~~~~~~~~~~~~~

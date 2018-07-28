@@ -42,10 +42,10 @@ struct pdsMap {
 void pdsUpdate(pdsMap *map) {
 	short dir, dirs;
 	pdsLink *left = NULL, *right = NULL, *link = NULL;
-	pdsLink *head;
-
+	
 	dirs = map->eightWays ? 8 : 4;
-	head = map->front.right;
+
+	pdsLink *head = map->front.right;
 	map->front.right = NULL;
 
 	while (head != NULL) {
@@ -165,7 +165,6 @@ void pdsBatchInput(pdsMap *map, short **distanceMap, short **costMap, short maxD
 	for (i=0; i<DCOLS; i++) {
 		for (j=0; j<DROWS; j++) {
 			pdsLink *link = PDS_CELL(map, i, j);
-			int cost; // always initialized
 
 			if (distanceMap != NULL) {
 				link->distance = distanceMap[i][j];
@@ -175,6 +174,8 @@ void pdsBatchInput(pdsMap *map, short **distanceMap, short **costMap, short maxD
 					link->distance = maxDistance;
 				}
 			}
+
+			int cost;
 
 			if (i == 0 || j == 0 || i == DCOLS - 1 || j == DROWS - 1) {
 				cost = PDS_OBSTRUCTION;
@@ -250,14 +251,22 @@ void calculateDistances(short **distanceMap,
 						creature *traveler,
 						boolean canUseSecretDoors,
 						boolean eightWays) {
-	static pdsMap map;
+	creature *monst;
+    static pdsMap map;
 
 	short i, j;
 	
 	for (i=0; i<DCOLS; i++) {
 		for (j=0; j<DROWS; j++) {
 			char cost;
-			if (canUseSecretDoors
+            monst = monsterAtLoc(i, j);
+            if (monst
+                && (monst->info.flags & MONST_IMMUNE_TO_WEAPONS)
+                && (monst->info.flags & (MONST_IMMOBILE | MONST_GETS_TURN_ON_ACTIVATION))) {
+                
+                // Always avoid damage-immune stationary monsters.
+                cost = PDS_FORBIDDEN;
+            } else if (canUseSecretDoors
                 && cellHasTMFlag(i, j, TM_IS_SECRET)
                 && cellHasTerrainFlag(i, j, T_OBSTRUCTS_PASSABILITY)
                 && !(discoveredTerrainFlagsAtLoc(i, j) & T_OBSTRUCTS_PASSABILITY)) {

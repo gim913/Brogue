@@ -112,6 +112,29 @@ void findReplaceGrid(short **grid, short findValueMin, short findValueMax, short
 	}
 }
 
+// Flood-fills the grid from (x, y) along cells that are within the eligible range.
+// Returns the total count of filled cells.
+short floodFillGrid(short **grid, short x, short y, short eligibleValueMin, short eligibleValueMax, short fillValue) {
+    enum directions dir;
+	short newX, newY, fillCount = 1;
+    
+#ifdef BROGUE_ASSERTS
+    assert(fillValue < eligibleValueMin || fillValue > eligibleValueMax);
+#endif
+    
+    grid[x][y] = fillValue;
+    for (dir = 0; dir < 4; dir++) {
+        newX = x + nbDirs[dir][0];
+        newY = y + nbDirs[dir][1];
+        if (coordinatesAreInMap(newX, newY)
+            && grid[newX][newY] >= eligibleValueMin
+            && grid[newX][newY] <= eligibleValueMax) {
+            fillCount += floodFillGrid(grid, newX, newY, eligibleValueMin, eligibleValueMax, fillValue);
+        }
+    }
+    return fillCount;
+}
+
 void drawRectangleOnGrid(short **grid, short x, short y, short width, short height, short value) {
     short i, j;
     
@@ -235,14 +258,12 @@ short leastPositiveValueInGrid(short **grid) {
 void randomLocationInGrid(short **grid, short *x, short *y, short validValue) {
     const short locationCount = validLocationCount(grid, validValue);
     short i, j;
-    short index;
-
+    
     if (locationCount <= 0) {
         *x = *y = -1;
         return;
     }
-    
-	index = rand_range(0, locationCount - 1);
+    short index = rand_range(0, locationCount - 1);
 	for(i = 0; i < DCOLS && index >= 0; i++) {
 		for(j = 0; j < DROWS && index >= 0; j++) {
             if (grid[i][j] == validValue) {

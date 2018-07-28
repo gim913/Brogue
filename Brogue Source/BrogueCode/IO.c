@@ -132,8 +132,9 @@ void getClosestValidLocationOnMap(short loc[2], short **map, short x, short y) {
 // Displays a menu of buttons for various commands.
 // Buttons will be disabled if not permitted based on the playback state.
 // Returns the keystroke to effect the button's command, or -1 if canceled.
-short actionMenu(short x, short y, boolean playingBack) {
+short actionMenu(short x, boolean playingBack) {
 	short buttonCount;
+    short y;
 	
 	brogueButton buttons[ROWS] = {{{0}}};
 	char yellowColorEscape[5] = "", whiteColorEscape[5] = "", darkGrayColorEscape[5] = "";
@@ -146,7 +147,6 @@ short actionMenu(short x, short y, boolean playingBack) {
 	
 	for (i=0; i<ROWS; i++) {
 		initializeButton(&(buttons[i]));
-		buttons[i].y = y + i;
 		buttons[i].buttonColor = interfaceBoxColor;
 		buttons[i].opacity = INTERFACE_OPACITY;
 	}
@@ -154,12 +154,20 @@ short actionMenu(short x, short y, boolean playingBack) {
 	buttonCount = 0;
 	
 	if (playingBack) {
-		sprintf(buttons[buttonCount].text,	"  %sk: %sFaster playback  ", yellowColorEscape, whiteColorEscape);
+        if (KEYBOARD_LABELS) {
+            sprintf(buttons[buttonCount].text,	"  %sk: %sFaster playback  ", yellowColorEscape, whiteColorEscape);
+        } else {
+            strcpy(buttons[buttonCount].text, "  Faster playback  ");
+        }
 		buttons[buttonCount].hotkey[0] = UP_KEY;
 		buttons[buttonCount].hotkey[1] = UP_ARROW;
 		buttons[buttonCount].hotkey[2] = NUMPAD_8;
 		buttonCount++;
-		sprintf(buttons[buttonCount].text,	"  %sj: %sSlower playback  ", yellowColorEscape, whiteColorEscape);
+        if (KEYBOARD_LABELS) {
+            sprintf(buttons[buttonCount].text,	"  %sj: %sSlower playback  ", yellowColorEscape, whiteColorEscape);
+        } else {
+            strcpy(buttons[buttonCount].text, "  Slower playback  ");
+        }
 		buttons[buttonCount].hotkey[0] = DOWN_KEY;
 		buttons[buttonCount].hotkey[1] = DOWN_ARROW;
 		buttons[buttonCount].hotkey[2] = NUMPAD_2;
@@ -167,59 +175,115 @@ short actionMenu(short x, short y, boolean playingBack) {
 		sprintf(buttons[buttonCount].text, "    %s---", darkGrayColorEscape);
 		buttons[buttonCount].flags &= ~B_ENABLED;
 		buttonCount++;
-		
-		sprintf(buttons[buttonCount].text,	"%s0-9: %sFast forward to turn  ", yellowColorEscape, whiteColorEscape);
+        
+        if (KEYBOARD_LABELS) {
+            sprintf(buttons[buttonCount].text,	"%s0-9: %sFast forward to turn  ", yellowColorEscape, whiteColorEscape);
+        } else {
+            strcpy(buttons[buttonCount].text, "  Fast forward to turn  ");
+        }
 		buttons[buttonCount].hotkey[0] = '0';
-		buttonCount++;
-		sprintf(buttons[buttonCount].text,	"  %s>:%s Next Level  ", yellowColorEscape, whiteColorEscape);
+        buttonCount++;
+        if (KEYBOARD_LABELS) {
+            sprintf(buttons[buttonCount].text,	"  %s>:%s Next Level  ", yellowColorEscape, whiteColorEscape);
+        } else {
+            strcpy(buttons[buttonCount].text, "  Next Level  ");
+        }
 		buttons[buttonCount].hotkey[0] = DESCEND_KEY;
 		buttonCount++;
 		sprintf(buttons[buttonCount].text, "    %s---", darkGrayColorEscape);
 		buttons[buttonCount].flags &= ~B_ENABLED;
 		buttonCount++;
-	} else {
-		sprintf(buttons[buttonCount].text, "  %sZ: %sSleep until better  ",		yellowColorEscape, whiteColorEscape);
+    } else {
+        if (KEYBOARD_LABELS) {
+            sprintf(buttons[buttonCount].text, "  %sZ: %sSleep until better  ",		yellowColorEscape, whiteColorEscape);
+        } else {
+            strcpy(buttons[buttonCount].text, "  Sleep until better  ");
+        }
 		buttons[buttonCount].hotkey[0] = AUTO_REST_KEY;
 		buttonCount++;
 		sprintf(buttons[buttonCount].text, "    %s---", darkGrayColorEscape);
 		buttons[buttonCount].flags &= ~B_ENABLED;
 		buttonCount++;
-		
-		sprintf(buttons[buttonCount].text, "  %sA: %sAutopilot  ",				yellowColorEscape, whiteColorEscape);
+        
+        if (KEYBOARD_LABELS) {
+            sprintf(buttons[buttonCount].text, "  %sA: %sAutopilot  ",				yellowColorEscape, whiteColorEscape);
+        } else {
+            strcpy(buttons[buttonCount].text, "  Autopilot  ");
+        }
 		buttons[buttonCount].hotkey[0] = AUTOPLAY_KEY;
 		buttonCount++;
 		sprintf(buttons[buttonCount].text, "    %s---", darkGrayColorEscape);
 		buttons[buttonCount].flags &= ~B_ENABLED;
 		buttonCount++;
-		
-		sprintf(buttons[buttonCount].text, "  %sS: %sSuspend game and quit  ",	yellowColorEscape, whiteColorEscape);
+        
+        if (KEYBOARD_LABELS) {
+            sprintf(buttons[buttonCount].text, "  %sS: %sSuspend game and quit  ",	yellowColorEscape, whiteColorEscape);
+        } else {
+            strcpy(buttons[buttonCount].text, "  Suspend game and quit  ");
+        }
 		buttons[buttonCount].hotkey[0] = SAVE_GAME_KEY;
-		buttonCount++;
-		sprintf(buttons[buttonCount].text, "  %sO: %sOpen suspended game  ",		yellowColorEscape, whiteColorEscape);
+        buttonCount++;
+        if (KEYBOARD_LABELS) {
+            sprintf(buttons[buttonCount].text, "  %sO: %sOpen suspended game  ",		yellowColorEscape, whiteColorEscape);
+        } else {
+            strcpy(buttons[buttonCount].text, "  Open suspended game  ");
+        }
 		buttons[buttonCount].hotkey[0] = LOAD_SAVED_GAME_KEY;
 		
-	}
-	sprintf(buttons[buttonCount].text, "  %sV: %sView saved recording  ",		yellowColorEscape, whiteColorEscape);
+    }
+    if (KEYBOARD_LABELS) {
+        sprintf(buttons[buttonCount].text, "  %sV: %sView saved recording  ",		yellowColorEscape, whiteColorEscape);
+    } else {
+        strcpy(buttons[buttonCount].text, "  View saved recording  ");
+    }
 	buttons[buttonCount].hotkey[0] = VIEW_RECORDING_KEY;
 	buttonCount++;
 	sprintf(buttons[buttonCount].text, "    %s---", darkGrayColorEscape);
 	buttons[buttonCount].flags &= ~B_ENABLED;
 	buttonCount++;
-	
-	sprintf(buttons[buttonCount].text, "  %sD: %sDiscovered items  ",	yellowColorEscape, whiteColorEscape);
+    
+    if (KEYBOARD_LABELS) {
+        sprintf(buttons[buttonCount].text, "  %sD: %sDiscovered items  ",	yellowColorEscape, whiteColorEscape);
+    } else {
+        strcpy(buttons[buttonCount].text, "  Discovered items  ");
+    }
 	buttons[buttonCount].hotkey[0] = DISCOVERIES_KEY;
-	buttonCount++;
-	sprintf(buttons[buttonCount].text, "  %s\\: %s%s color effects  ",	yellowColorEscape, whiteColorEscape, rogue.trueColorMode ? "Enable" : "Disable");
+    buttonCount++;
+    if (KEYBOARD_LABELS) {
+        sprintf(buttons[buttonCount].text, "  %s~: %sView dungeon seed  ",	yellowColorEscape, whiteColorEscape);
+    } else {
+        strcpy(buttons[buttonCount].text, "  View dungeon seed  ");
+    }
+	buttons[buttonCount].hotkey[0] = SEED_KEY;
+    buttonCount++;
+    if (KEYBOARD_LABELS) {
+        sprintf(buttons[buttonCount].text, "  %s\\: %s%s color effects  ",	yellowColorEscape, whiteColorEscape, rogue.trueColorMode ? "Enable" : "Disable");
+    } else {
+        sprintf(buttons[buttonCount].text, "  %s color effects  ",	rogue.trueColorMode ? "Enable" : "Disable");
+    }
 	buttons[buttonCount].hotkey[0] = TRUE_COLORS_KEY;
-	buttonCount++;
-	sprintf(buttons[buttonCount].text, "  %s?: %sHelp  ",						yellowColorEscape, whiteColorEscape);
-	buttons[buttonCount].hotkey[0] = HELP_KEY;
-	buttonCount++;
-	sprintf(buttons[buttonCount].text, "    %s---", darkGrayColorEscape);
-	buttons[buttonCount].flags &= ~B_ENABLED;
-	buttonCount++;
-	
-	sprintf(buttons[buttonCount].text, "  %sQ: %sQuit %s  ",	yellowColorEscape, whiteColorEscape, (playingBack ? "to title screen" : "without saving"));
+    buttonCount++;
+    if (KEYBOARD_LABELS) {
+        sprintf(buttons[buttonCount].text, "  %s]: %s%s stealth range  ",	yellowColorEscape, whiteColorEscape, rogue.displayAggroRangeMode ? "Hide" : "Display");
+    } else {
+        sprintf(buttons[buttonCount].text, "  %s stealth range  ",	rogue.displayAggroRangeMode ? "Hide" : "Display");
+    }
+	buttons[buttonCount].hotkey[0] = AGGRO_DISPLAY_KEY;
+    buttonCount++;
+    if (KEYBOARD_LABELS) { // No help button if we're not in keyboard mode.
+        sprintf(buttons[buttonCount].text, "  %s?: %sHelp  ", yellowColorEscape, whiteColorEscape);
+        buttons[buttonCount].hotkey[0] = HELP_KEY;
+        buttonCount++;
+    }
+    sprintf(buttons[buttonCount].text, "    %s---", darkGrayColorEscape);
+    buttons[buttonCount].flags &= ~B_ENABLED;
+    buttonCount++;
+    
+    if (KEYBOARD_LABELS) {
+        sprintf(buttons[buttonCount].text, "  %sQ: %sQuit %s  ",	yellowColorEscape, whiteColorEscape, (playingBack ? "to title screen" : "without saving"));
+    } else {
+        sprintf(buttons[buttonCount].text, "  Quit %s  ",	(playingBack ? "to title screen" : "without saving"));
+    }
 	buttons[buttonCount].hotkey[0] = QUIT_KEY;
 	buttonCount++;
 	
@@ -230,8 +294,10 @@ short actionMenu(short x, short y, boolean playingBack) {
 	for (i=0; i<buttonCount; i++) {
 		longestName = max(longestName, strLenWithoutEscapes(buttons[i].text));
 	}
+    y = ROWS - buttonCount;
 	for (i=0; i<buttonCount; i++) {
 		buttons[i].x = x;
+		buttons[i].y = y + i;
 		for (j = strLenWithoutEscapes(buttons[i].text); j < longestName; j++) {
 			strcat(buttons[i].text, " "); // Schlemiel the Painter, but who cares.
 		}
@@ -257,7 +323,7 @@ void initializeMenuButtons(buttonState *state, brogueButton buttons[5]) {
 	char whiteTextEscape[MAX_MENU_BUTTON_COUNT] = "";
 	color tempColor;
 	
-	encodeMessageColor(goldTextEscape, 0, &yellow);
+    encodeMessageColor(goldTextEscape, 0, KEYBOARD_LABELS ? &yellow : &white);
 	encodeMessageColor(whiteTextEscape, 0, &white);
 	
 	for (i=0; i<MAX_MENU_BUTTON_COUNT; i++) {
@@ -272,15 +338,27 @@ void initializeMenuButtons(buttonState *state, brogueButton buttons[5]) {
 	buttonCount = 0;
 	
 	if (rogue.playbackMode) {
-		sprintf(buttons[buttonCount].text,	" Unpause (%sspace%s) ", goldTextEscape, whiteTextEscape);
+        if (KEYBOARD_LABELS) {
+            sprintf(buttons[buttonCount].text,  " Unpause (%sspace%s) ", goldTextEscape, whiteTextEscape);
+        } else {
+            strcpy(buttons[buttonCount].text,   "     Unpause     ");
+        }
 		buttons[buttonCount].hotkey[0] = ACKNOWLEDGE_KEY;
 		buttonCount++;
 		
-		sprintf(buttons[buttonCount].text,	"Omniscience (%stab%s)", goldTextEscape, whiteTextEscape);
+        if (KEYBOARD_LABELS) {
+            sprintf(buttons[buttonCount].text,  "Omniscience (%stab%s)", goldTextEscape, whiteTextEscape);
+        } else {
+            strcpy(buttons[buttonCount].text,	"   Omniscience   ");
+        }
 		buttons[buttonCount].hotkey[0] = TAB_KEY;
 		buttonCount++;
 		
-		sprintf(buttons[buttonCount].text,	" Next Turn (%sl%s) ", goldTextEscape, whiteTextEscape);
+        if (KEYBOARD_LABELS) {
+            sprintf(buttons[buttonCount].text,	" Next Turn (%sl%s) ", goldTextEscape, whiteTextEscape);
+        } else {
+            strcpy(buttons[buttonCount].text,	"   Next Turn   ");
+        }
 		buttons[buttonCount].hotkey[0] = RIGHT_KEY;
 		buttons[buttonCount].hotkey[1] = RIGHT_ARROW;
 		buttons[buttonCount].hotkey[2] = NUMPAD_6;
@@ -294,11 +372,19 @@ void initializeMenuButtons(buttonState *state, brogueButton buttons[5]) {
 		buttons[buttonCount].hotkey[1] = 'X';
 		buttonCount++;
 		
-		sprintf(buttons[buttonCount].text,	"   Rest (%sz%s)   ", goldTextEscape, whiteTextEscape);
+        if (KEYBOARD_LABELS) {
+            sprintf(buttons[buttonCount].text,	"   Rest (%sz%s)   ", goldTextEscape, whiteTextEscape);
+        } else {
+            strcpy(buttons[buttonCount].text,	"     Rest     ");
+        }
 		buttons[buttonCount].hotkey[0] = REST_KEY;
 		buttonCount++;
 		
-		sprintf(buttons[buttonCount].text,	"  Search (%ss%s)  ", goldTextEscape, whiteTextEscape);
+        if (KEYBOARD_LABELS) {
+            sprintf(buttons[buttonCount].text,	"  Search (%ss%s)  ", goldTextEscape, whiteTextEscape);
+        } else {
+            strcpy(buttons[buttonCount].text,	"    Search    ");
+        }
 		buttons[buttonCount].hotkey[0] = SEARCH_KEY;
 		buttonCount++;
 		
@@ -500,7 +586,7 @@ void mainInputLoop() {
 			rogue.playbackMode = false;
 			
 			if (state.buttonChosen == 3) { // Actions menu button.
-				buttonInput = actionMenu(buttons[3].x - 4, buttons[3].y - (playingBack ? 14 : 13), playingBack); // Returns the corresponding keystroke.
+				buttonInput = actionMenu(buttons[3].x - 4, playingBack); // Returns the corresponding keystroke.
 				if (buttonInput == -1) { // Canceled.
 					doEvent = false;
 				} else {
@@ -703,11 +789,15 @@ void storeColorComponents(char components[3], const color *theColor) {
 }
 
 void bakeTerrainColors(color *foreColor, color *backColor, short x, short y) {
-    
-	const short nf = 1000;
-	const short nb = 0;
-	const short neutralColors[8] = {nf, nf, nf, nf, nb, nb, nb, nb};
-	const short *vals = (rogue.trueColorMode) ? neutralColors : &(terrainRandomValues[x][y][0]);
+    const short *vals;
+    if (rogue.trueColorMode) {
+        const short nf = 1000;
+        const short nb = 0;
+        const short neutralColors[8] = {nf, nf, nf, nf, nb, nb, nb, nb};
+        vals = neutralColors;
+    } else {
+        vals = &(terrainRandomValues[x][y][0]);
+    }
     
 	const short foreRand = foreColor->rand * vals[6] / 1000;
 	const short backRand = backColor->rand * vals[7] / 1000;
@@ -807,6 +897,7 @@ boolean separateColors(color *fore, color *back) {
 // okay, this is kind of a beast...
 void getCellAppearance(short x, short y, uchar *returnChar, color *returnForeColor, color *returnBackColor) {
 	short bestBCPriority, bestFCPriority, bestCharPriority;
+    short distance;
 	uchar cellChar = 0;
 	color cellForeColor, cellBackColor, lightMultiplierColor = black, gasAugmentColor;
 	boolean monsterWithDetectedItem = false, needDistinctness = false;
@@ -814,7 +905,7 @@ void getCellAppearance(short x, short y, uchar *returnChar, color *returnForeCol
 	creature *monst = NULL;
 	item *theItem = NULL;
     enum tileType tile = NOTHING;
-	uchar itemChars[] = {POTION_CHAR, SCROLL_CHAR, FOOD_CHAR, WAND_CHAR,
+	const uchar itemChars[] = {POTION_CHAR, SCROLL_CHAR, FOOD_CHAR, WAND_CHAR,
 						STAFF_CHAR, GOLD_CHAR, ARMOR_CHAR, WEAPON_CHAR, RING_CHAR, CHARM_CHAR};
 	enum dungeonLayers layer, maxLayer;
 	
@@ -937,15 +1028,19 @@ void getCellAppearance(short x, short y, uchar *returnChar, color *returnForeCol
 				   && (!(monst->bookkeepingFlags & MONST_SUBMERGED) || rogue.inWater || rogue.playbackOmniscience)) {
 			needDistinctness = true;
 			if (player.status[STATUS_HALLUCINATING] > 0 && !(monst->info.flags & MONST_INANIMATE) && !rogue.playbackOmniscience) {
-				cellChar = rand_range('a', 'z') + (rand_range(0, 1) ? 'A' - 'a' : 0);
+				cellChar = rand_range('a', 'z');
+                if (rand_range(0, 1)) {
+                    cellChar += 'A' - 'a';
+                }
 				cellForeColor = *(monsterCatalog[rand_range(1, NUMBER_MONSTER_KINDS - 1)].foreColor);
 			} else {
 				cellChar = monst->info.displayChar;
+                cellForeColor = *(monst->info.foreColor);
 				if (monst->status[STATUS_INVISIBLE] || (monst->bookkeepingFlags & MONST_SUBMERGED)) {
                     // Invisible allies show up on the screen with a transparency effect.
-					cellForeColor = cellBackColor;
+					//cellForeColor = cellBackColor;
+                    applyColorAverage(&cellForeColor, &cellBackColor, 75);
 				} else {
-					cellForeColor = *(monst->info.foreColor);
 					if (monst->creatureState == MONSTER_ALLY
 						&& (monst->info.displayChar >= 'a' && monst->info.displayChar <= 'z' || monst->info.displayChar >= 'A' && monst->info.displayChar <= 'Z')) {
 						//applyColorAverage(&cellForeColor, &blue, 50);
@@ -1010,27 +1105,25 @@ void getCellAppearance(short x, short y, uchar *returnChar, color *returnForeCol
 		
 		if (!(pmap[x][y].flags & (ANY_KIND_OF_VISIBLE | ITEM_DETECTED | HAS_PLAYER))
 			&& !playerCanSeeOrSense(x, y)
-			&& (!monst || monsterRevealed(monst)) && !monsterWithDetectedItem) {
-			
-			bakeTerrainColors(&cellForeColor, &cellBackColor, x, y);
+			&& (!monst || !monsterRevealed(monst)) && !monsterWithDetectedItem) {
 			
 			// store memory
 			storeColorComponents(pmap[x][y].rememberedAppearance.foreColorComponents, &cellForeColor);
 			storeColorComponents(pmap[x][y].rememberedAppearance.backColorComponents, &cellBackColor);
 			
 			applyColorAugment(&lightMultiplierColor, &basicLightColor, 100);
-			
 			if (!rogue.trueColorMode || !needDistinctness) {
 				applyColorMultiplier(&cellForeColor, &lightMultiplierColor);
 			}
-			
 			applyColorMultiplier(&cellBackColor, &lightMultiplierColor);
+			bakeTerrainColors(&cellForeColor, &cellBackColor, x, y);
 			
 			pmap[x][y].rememberedAppearance.character = cellChar;
 			pmap[x][y].flags |= STABLE_MEMORY;
 			pmap[x][y].rememberedTerrain = pmap[x][y].layers[highestPriorityLayer(x, y, false)];
 			if (pmap[x][y].flags & HAS_ITEM) {
                 theItem = itemAtLoc(x, y);
+                //addItemToPack()
 				pmap[x][y].rememberedItemCategory = theItem->category;
 			} else {
 				pmap[x][y].rememberedItemCategory = 0;
@@ -1133,6 +1226,16 @@ void getCellAppearance(short x, short y, uchar *returnChar, color *returnForeCol
 	}
 	
 	bakeTerrainColors(&cellForeColor, &cellBackColor, x, y);
+    
+    if (rogue.displayAggroRangeMode && (pmap[x][y].flags & IN_FIELD_OF_VIEW)) {
+        distance = min(rogue.scentTurnNumber - scentMap[x][y], scentDistance(x, y, player.xLoc, player.yLoc));
+        if (distance > rogue.aggroRange * 2) {
+            applyColorAverage(&cellForeColor, &orange, 12);
+            applyColorAverage(&cellBackColor, &orange, 12);
+            applyColorAugment(&cellForeColor, &orange, 12);
+            applyColorAugment(&cellBackColor, &orange, 12);
+        }
+    }
 	
 	if (needDistinctness) {
 		separateColors(&cellForeColor, &cellBackColor);
@@ -1406,16 +1509,17 @@ void colorMultiplierFromDungeonLight(short x, short y, color *editColor) {
 }
 
 void plotCharWithColor(uchar inputChar, short xLoc, short yLoc, const color *cellForeColor, const color *cellBackColor) {
+    short oldRNG;
 	
-	short foreRed = cellForeColor->red;
-	short foreGreen = cellForeColor->green;
-	short foreBlue = cellForeColor->blue;
-
-	short backRed = cellBackColor->red;
-	short backGreen = cellBackColor->green;
-	short backBlue = cellBackColor->blue;
-
-	short foreRand, backRand, oldRNG;
+	short foreRed = cellForeColor->red,
+	foreGreen = cellForeColor->green,
+	foreBlue = cellForeColor->blue,
+	
+	backRed = cellBackColor->red,
+	backGreen = cellBackColor->green,
+	backBlue = cellBackColor->blue,
+	
+	foreRand, backRand;
 	
 #ifdef BROGUE_ASSERTS
 	assert(coordinatesAreInWindow(xLoc, yLoc));
@@ -1425,7 +1529,9 @@ void plotCharWithColor(uchar inputChar, short xLoc, short yLoc, const color *cel
 		return;
 	}
 	
-	assureCosmeticRNG_nodecl;
+    //assureCosmeticRNG;
+	oldRNG = rogue.RNG;
+    rogue.RNG = RNG_COSMETIC;
 	
 	foreRand = rand_range(0, cellForeColor->rand);
 	backRand = rand_range(0, cellBackColor->rand);
@@ -1475,8 +1581,8 @@ void plotCharWithColor(uchar inputChar, short xLoc, short yLoc, const color *cel
 
 void plotCharToBuffer(uchar inputChar, short x, short y, color *foreColor, color *backColor, cellDisplayBuffer dbuf[COLS][ROWS]) {
 	short oldRNG;
-
-	if (!dbuf) {
+    
+    if (!dbuf) {
 		plotCharWithColor(inputChar, x, y, foreColor, backColor);
 		return;
 	}
@@ -1484,8 +1590,10 @@ void plotCharToBuffer(uchar inputChar, short x, short y, color *foreColor, color
 #ifdef BROGUE_ASSERTS
 	assert(coordinatesAreInWindow(x, y));
 #endif
-	
-	assureCosmeticRNG_nodecl;
+    
+	oldRNG = rogue.RNG;
+    rogue.RNG = RNG_COSMETIC;
+	//assureCosmeticRNG;
 	dbuf[x][y].foreColorComponents[0] = foreColor->red + rand_range(0, foreColor->redRand) + rand_range(0, foreColor->rand);
 	dbuf[x][y].foreColorComponents[1] = foreColor->green + rand_range(0, foreColor->greenRand) + rand_range(0, foreColor->rand);
 	dbuf[x][y].foreColorComponents[2] = foreColor->blue + rand_range(0, foreColor->blueRand) + rand_range(0, foreColor->rand);
@@ -1678,13 +1786,15 @@ void flashForeground(short *x, short *y, color **flashColor, short *flashStrengt
 	short i, j, percent;
 	uchar *displayChar;
 	color *bColor, *fColor, newColor;
-	short oldRNG;
-
+    short oldRNG;
+	
 	if (count <= 0) {
 		return;
 	}
 	
-	assureCosmeticRNG_nodecl;
+	oldRNG = rogue.RNG;
+    rogue.RNG = RNG_COSMETIC;
+	//assureCosmeticRNG;
 	
 	displayChar = (uchar *) malloc(count * sizeof(uchar));
 	fColor = (color *) malloc(count * sizeof(color));
@@ -2177,9 +2287,23 @@ void executeKeystroke(signed long keystroke, boolean controlKey, boolean shiftKe
 			displayLevel();
 			refreshSideBar(-1, -1, false);
 			if (rogue.trueColorMode) {
-				messageWithColor("Color effects disabled. Press '\\' again to enable.", &teal, false);
+				messageWithColor(KEYBOARD_LABELS ? "Color effects disabled. Press '\\' again to enable." : "Color effects disabled.",
+                                 &teal, false);
 			} else {
-				messageWithColor("Color effects enabled. Press '\\' again to disable.", &teal, false);
+				messageWithColor(KEYBOARD_LABELS ? "Color effects enabled. Press '\\' again to disable." : "Color effects enabled.",
+                                 &teal, false);
+			}
+			break;
+		case AGGRO_DISPLAY_KEY:
+			rogue.displayAggroRangeMode = !rogue.displayAggroRangeMode;
+			displayLevel();
+			refreshSideBar(-1, -1, false);
+			if (rogue.displayAggroRangeMode) {
+                messageWithColor(KEYBOARD_LABELS ? "Stealth range displayed. Press ']' again to hide." : "Stealth range displayed.",
+                                 &teal, false);
+            } else {
+                messageWithColor(KEYBOARD_LABELS ? "Stealth range hidden. Press ']' again to display." : "Stealth range hidden.",
+                                 &teal, false);
 			}
 			break;
 //		case FIGHT_KEY:
@@ -2314,7 +2438,7 @@ boolean getInputTextString(char *inputText,
 						   boolean useDialogBox) {
 	short charNum, i, x, y;
 	char keystroke, suffix[100];
-	const short textEntryBounds[TEXT_INPUT_TYPES][2] = {{' ', '~'}, {'0', '9'}};
+	const short textEntryBounds[TEXT_INPUT_TYPES][2] = {{' ', '~'}, {' ', '~'}, {'0', '9'}};
 	cellDisplayBuffer dbuf[COLS][ROWS], rbuf[COLS][ROWS];
 	
 	// x and y mark the origin for text entry.
@@ -2364,6 +2488,12 @@ boolean getInputTextString(char *inputText,
 			inputText[charNum] = ' ';
 		} else if (keystroke >= textEntryBounds[textEntryType][0]
 				   && keystroke <= textEntryBounds[textEntryType][1]) { // allow only permitted input
+            
+            if (textEntryType == TEXT_INPUT_FILENAME
+                && characterForbiddenInFilename(keystroke)) {
+                
+                keystroke = '-';
+            }
 			
 			inputText[charNum] = keystroke;
 			plotCharWithColor(keystroke, x + charNum, y, &white, &black);
@@ -2399,13 +2529,15 @@ void flashMessage(char *message, short x, short y, int time, color *fColor, colo
 	color backColors[COLS], backColor, foreColor;
 	cellDisplayBuffer dbufs[COLS];
 	uchar dchar;
-	short oldRNG;
-
+    short oldRNG;
+	
 	if (rogue.playbackFastForward) {
 		return;
 	}
-	
-	assureCosmeticRNG_nodecl;
+    
+	oldRNG = rogue.RNG;
+    rogue.RNG = RNG_COSMETIC;
+	//assureCosmeticRNG;
 	
 	messageLength = strLenWithoutEscapes(message);
 	fastForward = false;
@@ -2489,7 +2621,7 @@ boolean confirm(char *prompt, boolean alsoDuringPlayback) {
 	}
 	
 	encodeMessageColor(whiteColorEscape, 0, &white);
-	encodeMessageColor(yellowColorEscape, 0, &yellow);
+	encodeMessageColor(yellowColorEscape, 0, KEYBOARD_LABELS ? &yellow : &white);
 	
 	initializeButton(&(buttons[0]));
 	sprintf(buttons[0].text, "     %sY%ses     ", yellowColorEscape, whiteColorEscape);
@@ -2528,15 +2660,17 @@ void displayMonsterFlashes(boolean flashingEnabled) {
 	creature *monst;
 	short x[100], y[100], strength[100], count = 0;
 	color *flashColor[100];
-	short oldRNG;
-
+    short oldRNG;
+	
 	rogue.creaturesWillFlashThisTurn = false;
 	
 	if (rogue.autoPlayingLevel || rogue.blockCombatText) {
 		return;
 	}
 	
-	assureCosmeticRNG_nodecl;
+    oldRNG = rogue.RNG;
+    rogue.RNG = RNG_COSMETIC;
+	//assureCosmeticRNG;
 	
 	CYCLE_MONSTERS_AND_PLAYERS(monst) {
 		if (monst->bookkeepingFlags & MONST_WILL_FLASH) {
@@ -2839,10 +2973,10 @@ short decodeMessageColor(const char *msg, short i, color *returnColor) {
 
 // Returns a color for combat text based on the identity of the victim.
 color *messageColorFromVictim(creature *monst) {
-	if (monstersAreEnemies(&player, monst)) {
-		return &goodMessageColor;
-	} else if (monst == &player || monst->creatureState == MONSTER_ALLY) {
+	if (monst == &player || monst->creatureState == MONSTER_ALLY) {
 		return &badMessageColor;
+	} else if (monstersAreEnemies(&player, monst)) {
+		return &goodMessageColor;
 	} else {
 		return &white;
 	}
@@ -2944,13 +3078,15 @@ void refreshSideBar(short focusX, short focusY, boolean focusedEntityMustGoFirst
     short terrainLocationMap[ROWS][2];
 	boolean gotFocusedEntityOnScreen = (focusX >= 0 ? false : true);
 	char addedEntity[DCOLS][DROWS];
-	short oldRNG;
-
+    short oldRNG;
+	
 	if (rogue.gameHasEnded || rogue.playbackFastForward) {
 		return;
 	}
 	
-	assureCosmeticRNG_nodecl;
+    oldRNG = rogue.RNG;
+    rogue.RNG = RNG_COSMETIC;
+	//assureCosmeticRNG;
 	
 	if (focusX < 0) {
 		focusedEntityMustGoFirst = false; // just in case!
@@ -3303,7 +3439,7 @@ char nextKeyPress(boolean textInput) {
 	return theEvent.param1;
 }
 
-#define BROGUE_HELP_LINE_COUNT	32
+#define BROGUE_HELP_LINE_COUNT	33
 
 void printHelpScreen() {
 	short i, j;
@@ -3338,9 +3474,10 @@ void printHelpScreen() {
 		"             Q  ****quit to title screen",
         "",
 		"             \\  ****disable/enable color effects",
+		"             ]  ****display/hide stealth range",
 		"   <space/esc>  ****clear message or cancel command",
 		"",
-		"        -- press any key to continue --"
+		"        -- press space or click to continue --"
 	};
 	
 	// Replace the "****"s with color escapes.
@@ -3439,7 +3576,8 @@ void printDiscoveriesScreen() {
 	printString("-- WANDS --", mapToWindowX(54), y += NUMBER_STAFF_KINDS + 1, &flavorTextColor, &black, dbuf);
 	printDiscoveries(WAND, NUMBER_WAND_KINDS, WAND_CHAR, mapToWindowX(54), ++y, dbuf);
     
-    printString("-- press any key to continue --", mapToWindowX(20), mapToWindowY(DROWS-2), &itemMessageColor, &black, dbuf);
+    printString(KEYBOARD_LABELS ? "-- press any key to continue --" : "-- touch anywhere to continue --",
+                mapToWindowX(20), mapToWindowY(DROWS-2), &itemMessageColor, &black, dbuf);
 	
 	for (i=0; i<COLS; i++) {
 		for (j=0; j<ROWS; j++) {
@@ -3592,7 +3730,10 @@ void printHighScores(boolean hiliteMostRecent) {
 	
 	scoreColor = black;
 	applyColorAverage(&scoreColor, &goodMessageColor, 100);
-	printString("Press space to continue.", (COLS - strLenWithoutEscapes("Press space to continue.")) / 2, ROWS - 1, &scoreColor, &black, 0);
+    
+	printString(KEYBOARD_LABELS ? "Press space to continue." : "Touch anywhere to continue.",
+                (COLS - strLenWithoutEscapes(KEYBOARD_LABELS ? "Press space to continue." : "Touch anywhere to continue.")) / 2,
+                ROWS - 1, &scoreColor, &black, 0);
 	
 	commitDraws();
 	waitForAcknowledgment();
@@ -3684,7 +3825,7 @@ void printProgressBar(short x, short y, const char barLabel[COLS], long amtFille
 	applyColorAverage(&darkenedBarColor, &black, 75);
 	
 	labelOffset = (20 - strlen(barLabel)) / 2;
-	for (i=0; i<strlen(barLabel); i++) {
+	for (i = 0; i < (short) strlen(barLabel); i++) {
 		barText[i + labelOffset] = barLabel[i];
 	}
 	
@@ -3721,15 +3862,25 @@ void highlightScreenCell(short x, short y, color *highlightColor, short strength
 	displayBuffer[x][y].needsUpdate = true;
 }
 
+short estimatedArmorValue() {
+    short retVal;
+    
+    retVal = ((armorTable[rogue.armor->kind].range.upperBound + armorTable[rogue.armor->kind].range.lowerBound) / 2) / 10;
+    retVal += strengthModifier(rogue.armor);
+    retVal -= player.status[STATUS_DONNING];
+    
+    return max(0, retVal);
+}
+
 // returns the y-coordinate after the last line printed
 short printMonsterInfo(creature *monst, short y, boolean dim, boolean highlight) {
-	char buf[COLS], buf2[COLS], monstName[COLS], redColorEscape[5], grayColorEscape[5];
+	char buf[COLS], buf2[COLS], monstName[COLS], tempColorEscape[5], grayColorEscape[5];
 	uchar monstChar;
 	color monstForeColor, monstBackColor, healthBarColor, tempColor;
-	short initialY, i, j, highlightStrength, displayedArmor;
+	short initialY, i, j, highlightStrength, displayedArmor, percent;
 	boolean inPath;
-	short oldRNG;
-
+    short oldRNG;
+	
 	const char hallucinationStrings[10][COLS] = {
 		"     (Dancing)      ",
 		"     (Singing)      ",
@@ -3743,6 +3894,7 @@ short printMonsterInfo(creature *monst, short y, boolean dim, boolean highlight)
 		"    (Quivering)     ",
 	};
 	const char statusStrings[NUMBER_OF_STATUS_EFFECTS][COLS] = {
+        "Donning Armor",
 		"Weakened: -",
 		"Telepathic",
 		"Hallucinating",
@@ -3774,7 +3926,9 @@ short printMonsterInfo(creature *monst, short y, boolean dim, boolean highlight)
 	
 	initialY = y;
 	
-	assureCosmeticRNG_nodecl;
+    oldRNG = rogue.RNG;
+    rogue.RNG = RNG_COSMETIC;
+	//assureCosmeticRNG;
 	
 	if (y < ROWS - 1) {
 		printString("                    ", 0, y, &white, &black, 0); // Start with a blank line
@@ -3908,12 +4062,8 @@ short printMonsterInfo(creature *monst, short y, boolean dim, boolean highlight)
 					printString("     (Sleeping)     ", 0, y++, (dim ? &darkGray : &gray), &black, 0);
                 } else if ((monst->creatureState == MONSTER_ALLY) && y < ROWS - 1) {
                     printString("       (Ally)       ", 0, y++, (dim ? &darkGray : &gray), &black, 0);
-                } else if (monst->ticksUntilTurn > player.ticksUntilTurn + player.movementSpeed) {
-                    printString("   (Off balance)    ", 0, y++, (dim ? &darkGray : &gray), &black, 0);
 				} else if (monst->creatureState == MONSTER_FLEEING && y < ROWS - 1) {
 					printString("     (Fleeing)      ", 0, y++, (dim ? &darkGray : &gray), &black, 0);
-				} else if ((monst->creatureState == MONSTER_TRACKING_SCENT) && y < ROWS - 1) {
-					printString("     (Hunting)      ", 0, y++, (dim ? &darkGray : &gray), &black, 0);
 				} else if ((monst->creatureState == MONSTER_WANDERING) && y < ROWS - 1) {
 					if ((monst->bookkeepingFlags & MONST_FOLLOWER) && monst->leader && (monst->leader->info.flags & MONST_IMMOBILE)) {
 						// follower of an immobile leader -- i.e. a totem
@@ -3924,18 +4074,22 @@ short printMonsterInfo(creature *monst, short y, boolean dim, boolean highlight)
 					} else {
 						printString("    (Wandering)     ", 0, y++, (dim ? &darkGray : &gray), &black, 0);
 					}
+                } else if (monst->ticksUntilTurn > player.ticksUntilTurn + player.movementSpeed) {
+                    printString("   (Off balance)    ", 0, y++, (dim ? &darkGray : &gray), &black, 0);
+                } else if ((monst->creatureState == MONSTER_TRACKING_SCENT) && y < ROWS - 1) {
+					printString("     (Hunting)      ", 0, y++, (dim ? &darkGray : &gray), &black, 0);
 				}
 			}
 		} else if (monst == &player) {
 			if (y < ROWS - 1) {
-				redColorEscape[0] = '\0';
+				tempColorEscape[0] = '\0';
 				grayColorEscape[0] = '\0';
 				if (player.status[STATUS_WEAKENED]) {
 					tempColor = red;
 					if (dim) {
 						applyColorAverage(&tempColor, &black, 50);
 					}
-					encodeMessageColor(redColorEscape, 0, &tempColor);
+					encodeMessageColor(tempColorEscape, 0, &tempColor);
 					encodeMessageColor(grayColorEscape, 0, (dim ? &darkGray : &gray));
 				}
                 
@@ -3944,16 +4098,16 @@ short printMonsterInfo(creature *monst, short y, boolean dim, boolean highlight)
 				if (!rogue.armor || rogue.armor->flags & ITEM_IDENTIFIED || rogue.playbackOmniscience) {
 					
 					sprintf(buf, "Str: %s%i%s  Armor: %i",
-							redColorEscape,
+							tempColorEscape,
 							rogue.strength - player.weaknessAmount,
 							grayColorEscape,
 							displayedArmor);
 				} else {
 					sprintf(buf, "Str: %s%i%s  Armor: %i?",
-							redColorEscape,
+							tempColorEscape,
 							rogue.strength - player.weaknessAmount,
 							grayColorEscape,
-							max(0, (short) (((armorTable[rogue.armor->kind].range.upperBound + armorTable[rogue.armor->kind].range.lowerBound) / 2) / 10 + strengthModifier(rogue.armor))));
+							estimatedArmorValue());
 				}
 				//buf[20] = '\0';
 				printString("                    ", 0, y, &white, &black, 0);
@@ -3965,6 +4119,25 @@ short printMonsterInfo(creature *monst, short y, boolean dim, boolean highlight)
 				printString("                    ", 0, y, &white, &black, 0);
 				printString(buf, (20 - strLenWithoutEscapes(buf)) / 2, y++, (dim ? &darkGray : &gray), &black, 0);
 			}
+            if (y < ROWS - 1) {
+				tempColorEscape[0] = '\0';
+				grayColorEscape[0] = '\0';
+                tempColor = playerInShadowColor;
+                percent = (rogue.aggroRange - 2) * 100 / 28;
+                applyColorAverage(&tempColor, &black, percent);
+                applyColorAugment(&tempColor, &playerInLightColor, percent);
+                if (dim) {
+                    applyColorAverage(&tempColor, &black, 50);
+                }
+                encodeMessageColor(tempColorEscape, 0, &tempColor);
+                encodeMessageColor(grayColorEscape, 0, (dim ? &darkGray : &gray));
+                sprintf(buf, "%sStealth range: %i%s",
+                        tempColorEscape,
+                        rogue.aggroRange,
+                        grayColorEscape);
+				printString("                    ", 0, y, &white, &black, 0);
+				printString(buf, 1, y++, (dim ? &darkGray : &gray), &black, 0);
+            }
 		}
 	
 	if (y < ROWS - 1) {
@@ -3991,15 +4164,17 @@ short printItemInfo(item *theItem, short y, boolean dim, boolean highlight) {
 	color itemForeColor, itemBackColor;
 	short initialY, i, j, highlightStrength, lineCount;
 	boolean inPath;
-	short oldRNG;
-
+    short oldRNG;
+	
 	if (y >= ROWS - 1) {
 		return ROWS - 1;
 	}
 	
 	initialY = y;
 	
-	assureCosmeticRNG_nodecl;
+    oldRNG = rogue.RNG;
+    rogue.RNG = RNG_COSMETIC;
+	//assureCosmeticRNG;
 	
 	if (y < ROWS - 1) {
 		// Unhighlight if it's highlighted as part of the path.
@@ -4052,15 +4227,17 @@ short printTerrainInfo(short x, short y, short py, const char *description, bool
 	boolean inPath;
     char name[DCOLS*2];
     color textColor;
-	short oldRNG;
-
+    short oldRNG;
+	
 	if (py >= ROWS - 1) {
 		return ROWS - 1;
 	}
 	
 	initialY = py;
 	
-	assureCosmeticRNG_nodecl;
+    oldRNG = rogue.RNG;
+    rogue.RNG = RNG_COSMETIC;
+	//assureCosmeticRNG;
 	
 	if (py < ROWS - 1) {
 		// Unhighlight if it's highlighted as part of the path.
@@ -4250,7 +4427,7 @@ unsigned long printCarriedItemDetails(item *theItem,
 	
 	b = 0;
 	if (includeButtons) {
-		encodeMessageColor(goldColorEscape, 0, &yellow);
+		encodeMessageColor(goldColorEscape, 0, KEYBOARD_LABELS ? &yellow : &white);
 		encodeMessageColor(whiteColorEscape, 0, &white);
 		
 		if (theItem->category & (FOOD | SCROLL | POTION | WAND | STAFF | CHARM)) {
